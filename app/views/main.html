@@ -1,0 +1,36 @@
+<div ng-controller="MainCtrl" class="container">
+    <div class="row">
+        <h1>Classify a text</h1>
+    </div>
+    <div class="row">
+        <div class="small-4 columns">
+            <p>Select text file</p>
+            <input type="file" on-read-file="showContent($fileContent)" />
+        </div>
+        <div class="small-4 columns">
+            <select ng-model="selectedModel" ng-options="model.id as model.desc for model in models"></select><br>
+        </div>
+        <div class="small-4 columns">
+            <button ng-if="graphData" ng-click="classifyText()">Analyze again</button>
+        </div>
+    </div>
+
+
+    <div class="row">
+    <ul class="small-block-grid-2">
+        <li>
+            <div ng-if="fileContent">
+                <pre style="overflow: scroll; height:700px;">{{fileContent}}</pre>
+            </div>
+        </li>
+        <li>
+            <div ng-if="graphData">
+                <div ng-app="chartjs-directive">
+                    <chart width="500" type="Radar" value="graphData"></chart>
+                </div>
+            </div>
+        </li>
+    </ul>
+    </div>
+
+</div>
