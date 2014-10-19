@@ -8,47 +8,30 @@
  * Controller of the classifierApp
  */
 angular.module('classifierApp')
-  .controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+  .controller('MainCtrl', ['$rootScope', '$scope', '$http','datatxt', 'lodash', function ($rootScope, $scope, $http, datatxt, _) {
     $scope.models = [];
+    $scope.defaultModel = 'f83cc491-38e1-4203-bc18-25b076eeeeb4';
+    $rootScope.page = 'article';
+
+    $scope.getCurrentModel = function () {
+      if ($scope.selectedModel === undefined) return {};
+      return _.find($scope.models, {id: $scope.selectedModel});
+    };
 
     $scope.generateData = function (data) {
-      var labels = [
-        'technical pragmatical view',
-        'taken for grantedness',
-        'european forces',
-        'developemental state',
-        'continental capitalism',
-        'neo liberism',
-        'protecting rents',
-        'stigma inertia boiardi',
-        'stigma lottizzazione',
-        'capture view privatization',
-        'labour vs capital',
-        'captious view privatizaion'
-      ], tmpValues={}, values, categories = data.categories,
+      var labels, values=[], categories = data.categories,
         normalizeValue = function (value) {
-          return value;
-//          return Math.pow(value, 3);
+//          return value;
+          return Math.pow(value, 3)*100;
         };
 
-      for (var i=categories.length-1; i>=0; i--) {
-        tmpValues[categories[i].name] = categories[i].score;
+      labels = $scope.getCurrentModel().labels || [];
+
+      for (var i=labels.length-1; i>=0; i--) {
+        var val = _.find(categories, {'name': labels[i]});
+        values.push(normalizeValue(val.score));
       }
 
-      values = [
-        normalizeValue(tmpValues['technical pragmatical view']),
-        normalizeValue(tmpValues['taken for grantedness']),
-        normalizeValue(tmpValues['european forces']),
-        normalizeValue(tmpValues['developemental state']),
-        normalizeValue(tmpValues['continental capitalism']),
-        normalizeValue(tmpValues['neo liberism']),
-        normalizeValue(tmpValues['protecting rents']),
-        normalizeValue(tmpValues['stigma inertia boiardi']),
-        normalizeValue(tmpValues['stigma lottizzazione']),
-        normalizeValue(tmpValues['capture view privatization']),
-        normalizeValue(tmpValues['labour vs capital']),
-        normalizeValue(tmpValues['captious view privatizaion'])
-      ];
 
       $scope.graphData = {
         data: {
@@ -68,59 +51,40 @@ angular.module('classifierApp')
 
     $scope.classifyText = function (text) {
 
-      $scope.selectedModel = $scope.selectedModel || 'ccac0455-a654-4de4-b243-9f970da6a071';
+      $scope.selectedModel = $scope.selectedModel || $scope.defaultModel;
+
       var postData = {
-        '$app_key': '774fed79470dedd9977e81609690dbbf',
-        '$app_id': '***REMOVED***',
+        '$app_key': $scope.appKey,
+        '$app_id': $scope.appId,
         'text': text || $scope.fileContent,
         'model': $scope.selectedModel,
         'nex.min_length': 3
       };
 
-
-      $http({
-        method: 'POST',
-        url: '/datatxt/cl/v1',
-        data: $.param(postData),
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      })
-        .success(function (data) {
+      datatxt.classifier(
+          text || $scope.fileContent, $scope.selectedModel
+      ).then(function (data) {
           $scope.generateData(data);
-        })
-        .error(function (error) {
-          console.log(error)
-       })
+        });
     };
-
 
     $scope.showContent = function($fileContent){
       $scope.fileContent = $fileContent;
       $scope.classifierResults = $scope.classifyText($fileContent);
     };
-    $scope.getModels = function () {
-      var data = {
-        '$app_key': '774fed79470dedd9977e81609690dbbf',
-        '$app_id': '***REMOVED***'
-      };
-      $http.get('/datatxt/cl/models/v1', {params:data})
-        .success(function (data) {
-          var items = data.items, models = [];
+    datatxt.getAllModels().then(function (data) {
+      var items = data.items, models = [];
 
-          for(var i=items.length-1; i>=0; i--) {
-            models.push(
-              {
-               'id': items[i].id,
-               'desc': items[i].data.description,
-               'data': items[i].data
-              });
-          }
-          $scope.models = models;
-        })
-        .error(function (error) {
-          console.log(error)
-        })
-    };
-
-    $scope.getModels();
+      for(var i=items.length-1; i>=0; i--) {
+        models.push(
+          {
+            'id': items[i].id,
+            'desc': items[i].data.description,
+            'data': items[i].data,
+            'labels': items[i].data.categories.map(function (el) {return el.name})
+          });
+      }
+      $scope.models = models;
+    });
 
   }]);

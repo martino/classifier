@@ -1,23 +1,29 @@
 <div ng-controller="MainCtrl" class="container">
     <div class="row">
-        <h1>Classify a text</h1>
+        <h1>Classify an article</h1>
     </div>
     <div class="row">
         <div class="small-4 columns">
             <p>Select text file</p>
             <input type="file" on-read-file="showContent($fileContent)" />
         </div>
-        <div class="small-4 columns">
-            <select ng-model="selectedModel" ng-options="model.id as model.desc for model in models"></select><br>
+        <div class="small-8 columns">
+            <div class="row">
+                <div class="small-6 columns">
+                    <select ng-model="selectedModel" ng-options="model.id as model.desc for model in models"></select><br>
+                </div>
+                <div class="small-6 columns">
+                    <a ng-if="selectedModel" class="button secondary tiny" ng-href="/#/models/{{selectedModel}}/">show model</a>
+                    <a ng-if="graphData" class="button tiny" ng-click="classifyText()">analyze again</a>
+                </div>
+            </div>
         </div>
-        <div class="small-4 columns">
-            <button ng-if="graphData" ng-click="classifyText()">Analyze again</button>
-        </div>
+
     </div>
 
 
-    <div class="row">
-    <ul class="small-block-grid-2">
+    <!--<div class="row">-->
+    <ul class="small-block-grid-2" style="padding:20px;">
         <li>
             <div ng-if="fileContent">
                 <pre style="overflow: scroll; height:700px;">{{fileContent}}</pre>
@@ -25,12 +31,13 @@
         </li>
         <li>
             <div ng-if="graphData">
+                <!--<canvas id="radar" class="chart chart-radar" data="graphData" labels="graphLabels""></canvas>-->
                 <div ng-app="chartjs-directive">
                     <chart width="500" type="Radar" value="graphData"></chart>
                 </div>
             </div>
         </li>
     </ul>
-    </div>
+    <!--</div>-->
 
 </div>

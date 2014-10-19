@@ -17,6 +17,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'chartjs-directive',
+    'ngLodash'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -27,6 +28,14 @@ angular
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
+      })
+      .when('/models/:modelId/', {
+        templateUrl: 'views/models.html',
+        controller: 'CustomModelsCtrl'
+      })
+      .when('/models/', {
+        templateUrl: 'views/models-list.html',
+        controller: 'CustomModelsListCtrl'
       })
       .otherwise({
         redirectTo: '/'

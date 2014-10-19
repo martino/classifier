@@ -1,0 +1,16 @@
+<div ng-controller="CustomModelsCtrl" class="container">
+    <div ng-if="model">
+        <div class="row">
+            <h1>{{model.description}} <small>{{model.id}}</small></h1>
+        </div>
+
+        <div ng-repeat="category in model.categories" class="row">
+            <h2 style="font-variant: small-caps;">{{category.name}}</h2>
+            <ul>
+                <li ng-repeat="topic in category.topics | orderBy:weigth">
+                    <a href="{{topic.wikipage}}" target="_blank">{{topic.name}} <small>{{topic.weigth}}</small></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

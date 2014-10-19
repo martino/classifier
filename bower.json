@@ -12,7 +12,9 @@
     "angular-touch": "~1.2.0",
     "angular-route": "~1.2.0",
     "foundation": "~5.4.5",
-    "angular-chartjs-directive": "~0.0.2",
+    "open-iconic": "~1.1.1",
+    "ng-lodash": "~0.0.2",
+    "angular-chartjs-directive": "~0.0.2"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",
