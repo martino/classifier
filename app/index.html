@@ -26,18 +26,14 @@
         <nav class="top-bar foundation-bar" data-topbar>
             <ul class="title-area">
                 <li class="name">
-                    <span data-tooltip class="has-tip" title="Try resizing your browser to see how the grid stacks"><h1 class="show-for-small-only"><a href="#">Small screen</a></h1></span>
-                    <span data-tooltip class="has-tip" title="Try resizing your browser to see how the grid stacks"><h1 class="show-for-medium-only"><a href="#">Medium Screen</a></h1></span>
-                    <span data-tooltip class="has-tip" title="Try resizing your browser to see how the grid stacks"><h1 class="show-for-large-only"><a href="#">Large screen</a></h1></span>
+                    <h1><a href="#/">DocNavigator</a></h1>
                 </li>
             </ul>
             <section class="top-bar-section">
                 <ul class="right">
-                    <li><a  href="http://foundation.zurb.com/docs/"  target="_blank">Foundation Docs</a></li>
-                    <li class="active"><a  href="" target="_blank">Grid Example</a></li>
-                    <li><a  href="" target="_blank">Navigation Example</a></li>
-                    <li><a  href="" target="_blank">Forms</a></li>
-                    <li><a  href="" target="_blank">Interchange</a></li>
+                    <!--<li><a  href="" >Articles</a></li>-->
+                    <li ng-class="{active:page==='article'}"><a href="#/">Article Classification</a></li>
+                    <li ng-class="{active:page==='models'}"><a href="#/models/">Models</a></li>
                 </ul>
             </section>
         </nav>
@@ -75,9 +71,9 @@
     <script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
     <script src="bower_components/jquery-placeholder/jquery.placeholder.js"></script>
     <script src="bower_components/foundation/js/foundation.js"></script>
+    <script src="bower_components/ng-lodash/build/ng-lodash.js"></script>
     <script src="bower_components/chartjs/Chart.min.js"></script>
     <script src="bower_components/angular-chartjs-directive/chartjs-directive.js"></script>
-    <script src="bower_components/angular-chosen-localytics/chosen.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -86,6 +82,9 @@
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/directives/onreadfile.js"></script>
+        <script src="scripts/services/datatxt.js"></script>
+        <script src="scripts/controllers/custom-models.js"></script>
+        <script src="scripts/controllers/custom-models-list.js"></script>
         <!-- endbuild -->
 </body>
 </html>
