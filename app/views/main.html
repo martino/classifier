@@ -31,10 +31,7 @@
         </li>
         <li>
             <div ng-if="graphData">
-                <!--<canvas id="radar" class="chart chart-radar" data="graphData" labels="graphLabels""></canvas>-->
-                <div ng-app="chartjs-directive">
-                    <chart width="500" type="Radar" value="graphData"></chart>
-                </div>
+                <canvas radarchart options="options"  data="graphData" width="500" height="500"></canvas>
             </div>
         </li>
     </ul>

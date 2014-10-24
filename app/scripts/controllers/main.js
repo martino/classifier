@@ -32,9 +32,7 @@ angular.module('classifierApp')
         values.push(normalizeValue(val.score));
       }
 
-
       $scope.graphData = {
-        data: {
           labels : labels,
           datasets : [
             {
@@ -45,7 +43,6 @@ angular.module('classifierApp')
               data : values
             }
           ]
-        }
       }
     };
 
@@ -59,6 +56,7 @@ angular.module('classifierApp')
         'text': text || $scope.fileContent,
         'model': $scope.selectedModel,
         'nex.min_length': 3
+
       };
 
       datatxt.classifier(
