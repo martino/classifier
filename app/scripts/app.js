@@ -16,7 +16,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'chartjs-directive',
+//    'chartjs-directive',
+    'angles',
     'ngLodash'
   ])
   .config(function ($routeProvider) {
