@@ -5,12 +5,25 @@
         </div>
 
         <div ng-repeat="category in model.categories" class="row">
-            <h2 style="font-variant: small-caps;">{{category.name}}</h2>
-            <ul>
-                <li ng-repeat="topic in category.topics | orderBy:weigth">
-                    <a href="{{topic.wikipage}}" target="_blank">{{topic.name}} <small>{{topic.weigth}}</small></a>
-                </li>
-            </ul>
+            <div class="row">
+              <div class="column column-auto">
+                <h2 style="font-variant: small-caps;">{{category.name}} <small>#{{category.topics.length}}</small></h2>
+              </div>
+              <div class="column column-auto">
+                <ul class="button-group">
+                  <li ng-hide="editMode"><a ng-click="enterEditMode()" class="button tiny" >edit</a></li>
+                  <li ng-show="editMode"><a ng-click="handlingSave()" class="button tiny alert" >save</a></li>
+                  <li ng-show="editMode"><a ng-click="handlingCancel()" class="button tiny secondary" >cancel</a></li>
+                </ul>
+              </div>
+
+            </div>
+            <div class="row row-all-left" data-equalizer>
+              <div class="large-3 columns" data-equalizer-watch ng-repeat="topic in category.topics | orderBy:weigth">
+                <topic-entity entity="topic" edit-mode="editMode" category="category.name"></topic-entity>
+              </div>
+            </div>
+
         </div>
     </div>
 </div>

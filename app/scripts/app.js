@@ -18,7 +18,8 @@ angular
     'ngTouch',
 //    'chartjs-directive',
     'angles',
-    'ngLodash'
+    'ngLodash',
+    'LocalStorageModule'
   ])
   .config(function ($routeProvider) {
     $routeProvider

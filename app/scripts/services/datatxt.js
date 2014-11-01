@@ -8,12 +8,13 @@
  * Service in the classifierApp.
  */
 angular.module('classifierApp')
-  .service('datatxt', ['$http', '$q', 'lodash', function ($http, $q, _) {
+  .service('datatxt', ['$http', '$q', 'lodash', 'localStorageService', function ($http, $q, _, localStorageService) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var dataTXT = {
       urls: {
         classifier: '/datatxt/cl/v1/',
-        models: '/datatxt/cl/models/v1/'
+        models: '/datatxt/cl/models/v1/',
+        topics: '/_topic'
       },
       credentials: {
         '$app_id': '***REMOVED***',
@@ -72,6 +73,22 @@ angular.module('classifierApp')
       return queryDataTXT(request);
     };
 
+    var updateModel = function (modelId, data) {
+      var postData = {
+        'id': modelId,
+        'data': JSON.stringify(data)
+      };
+      postData = addAuth(postData);
+      var request = {
+        method: 'PUT',
+        url: dataTXT.urls.models,
+        data: $.param(postData),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+
+      };
+      return queryDataTXT(request);
+    };
+
     var getAllModels = function () {
       var request = {
         method: 'GET',
@@ -81,10 +98,49 @@ angular.module('classifierApp')
       return queryDataTXT(request);
     };
 
+    var getTopicDetails = function (topic, lang) {
+      var params = {
+        'topic': topic,
+        'lang': lang
+      };
+
+      var request = {
+        method: 'GET',
+        url: dataTXT.urls.topics,
+        params: params
+      };
+      return queryDataTXT(request);
+    };
+
+    var cleanTopic = function (data) {
+      var cleanedData = data.topic;
+      if ('image' in cleanedData && cleanedData.image.thumbnail) {
+        cleanedData.imageThumbnail = cleanedData.image.thumbnail.replace('/200px', '/300px');
+      }
+      return cleanedData;
+    };
+
+    var getTopic = function (topic, lang) {
+      var entityDetails = localStorageService.get(topic);
+
+      if (entityDetails === null) {
+        getTopicDetails(topic, lang)
+          .then(function (data) {
+            var cleanedData = cleanTopic(data);
+            localStorageService.set(topic, cleanedData);
+            return cleanedData;
+          })
+      } else {
+        return entityDetails;
+      }
+    };
 
     return {
       'classifier': classifier,
       'getAllModels': getAllModels,
-      'getModel': getModel
+      'getModel': getModel,
+      'updateModel': updateModel,
+      //'getTopicDetails': getTopicDetails,
+      'getTopic': getTopic
     }
   }]);
