@@ -76,7 +76,12 @@ module.exports = function (grunt) {
         host: 'api.dandelion.eu', // wherever the data service is running
 //        port: 443, // the port that the data service is running on
         https: true
-      }],
+      }, {
+        context: '/_topic',
+        host: 'datatxt-dev.netseven.it',
+        port: 9999
+      }
+      ],
       livereload: {
         options: {
           open: true,

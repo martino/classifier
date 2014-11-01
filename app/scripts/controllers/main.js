@@ -47,18 +47,7 @@ angular.module('classifierApp')
     };
 
     $scope.classifyText = function (text) {
-
       $scope.selectedModel = $scope.selectedModel || $scope.defaultModel;
-
-      var postData = {
-        '$app_key': $scope.appKey,
-        '$app_id': $scope.appId,
-        'text': text || $scope.fileContent,
-        'model': $scope.selectedModel,
-        'nex.min_length': 3
-
-      };
-
       datatxt.classifier(
           text || $scope.fileContent, $scope.selectedModel
       ).then(function (data) {
