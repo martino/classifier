@@ -42,4 +42,9 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+  })
+  .run(function($timeout){
+    $timeout(function() {
+      $(document).foundation();
+    }, 500);
   });
