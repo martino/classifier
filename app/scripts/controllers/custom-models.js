@@ -12,7 +12,15 @@ angular.module('classifierApp')
     $scope.model = {};
     $rootScope.page = 'models';
     $scope.editMode = false;
-
+    $scope.categoriesStyle = {'width': '100%'};
+    //$scope.watch("model", function () {
+    //  var width = '100%';
+    //  if ('categories' in $scope.model) {
+    //    width = $scope.model.categories.length * 300 + 100;
+    //  }
+    //  $scope.categoriesStyle.width = width;
+    //});
+    //
 
     var loadModel = function () {
       var datatxtModel = $scope.dtModel
@@ -33,6 +41,7 @@ angular.module('classifierApp')
         }});
         model.categories.push(newCategory)
       });
+      $scope.categoriesStyle.width = (model.categories.length * 300 + 100) + 'px';
       return model;
     };
 
