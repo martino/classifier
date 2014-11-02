@@ -26,3 +26,20 @@
   float: left;
   width: auto;
 }
+
+.column-container {
+  overflow-x: scroll;
+}
+
+.column-wrapper {
+  white-space: nowrap;
+  max-width: 100000px;
+  min-width: 100%;
+}
+
+.column-item {
+  display: inline-block;
+  width: 300px;
+  float: left;
+  margin-right: 10px;
+}
