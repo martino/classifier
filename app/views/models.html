@@ -3,23 +3,26 @@
         <div class="row">
             <h1>{{model.description}} <small>{{model.id}}</small></h1>
         </div>
+        <div class="row">
+
+          <ul class="button-group column large-2 large-offset-10">
+            <li ng-hide="editMode"><a ng-click="enterEditMode()" class="button tiny" >edit</a></li>
+            <li ng-show="editMode"><a ng-click="handlingSave()" class="button tiny alert" >save</a></li>
+            <li ng-show="editMode"><a ng-click="handlingCancel()" class="button tiny secondary" >cancel</a></li>
+          </ul>
+        </div>
         <div class="row row-all-left column-container" data-equalizer>
           <div class="large-12 column column-wrapper" ng-style="categoriesStyle">
           <!--<div class="large-12 column column-wrapper" >-->
-            <div ng-repeat="category in model.categories" class="column-item" data-equalizer-watch>
+            <div ng-repeat="category in model.categories" class="column-item" ng-class="generateCategoryColor($index)" data-equalizer-watch>
               <ul class="pricing-table">
-                <li class="title">{{category.name}} <small>#{{category.topics.length}}</small></li>
-                <!--<li class="price">$99.99</li> -->
-                <!--<li class="description">An awesome description</li>-->
-                <li class="bullet-item" ng-repeat="topic in category.topics | orderBy:weigth">
+                <li class="title">{{category.name}}</li>
+                <li class="bullet-item" ng-class="generateEntityColor(topic)" ng-repeat="topic in category.topics | orderBy:weigth">
                   <topic-entity entity="topic" edit-mode="editMode" category="category.name"></topic-entity>
                 </li>
                 <li class="cta-button">
-                  <ul class="button-group">
-                    <li ng-hide="editMode"><a ng-click="enterEditMode()" class="button tiny" >edit</a></li>
-                    <li ng-show="editMode"><a ng-click="handlingSave()" class="button tiny alert" >save</a></li>
-                    <li ng-show="editMode"><a ng-click="handlingCancel()" class="button tiny secondary" >cancel</a></li>
-                  </ul>
+                    <a class="button tiny" >Add</a>
+                    <a class="button tiny alert" >Delete</a>
                 </li>
               </ul>
             </div>
