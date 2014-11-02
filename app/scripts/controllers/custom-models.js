@@ -22,6 +22,13 @@ angular.module('classifierApp')
     //});
     //
 
+    $scope.generateCategoryColor = function (index) {
+      return 'color-' + (index + 1);
+    };
+    $scope.generateEntityColor = function (topic) {
+      return 'color-weight-' + topic.weigth;
+    };
+
     var loadModel = function () {
       var datatxtModel = $scope.dtModel
         , model = {
