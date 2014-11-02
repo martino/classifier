@@ -3,17 +3,19 @@
   <!--<img ng-show="entityData.imageThumbnail" ng-src="{{entityData.imageThumbnail}}">-->
   <!--<img ng-hide="entityData.imageThumbnail" src="">-->
   <!--<div class="panel">-->
+
+
   <div>
     <!--<a href="{{entity.wikipage}}" target="_blank">{{entity.name}} <small>{{entity.weigth}}</small></a>-->
-    <a data-dropdown="drop-{{entityData.id}}" aria-controls="drop-{{entityData.id}}" aria-expanded="false">{{entity.name}}</a>
-    <div id="drop-{{entityData.id}}" data-dropdown-content class="f-dropdown content text-left" aria-hidden="true" tabindex="-1">
-      <h4>{{entityData.title}}</h4>
-      <img ng-src="{{entityData.imageThumbnail}}"/>
-      <p>{{entityData.abstract}}</p>
-      <ul class="inline-list">
-        <li ng-repeat="etype in entityData.types">{{etype}}</li>
-      </ul>
-    </div>
+    <a ng-click="openDetails()">{{entity.name}}</a>
+    <!--<div id="drop-{{entityData.id}}" data-dropdown-content class="f-dropdown content text-left" aria-hidden="true" tabindex="-1">-->
+      <!--<h4>{{entityData.title}}</h4>-->
+      <!--<img ng-src="{{entityData.imageThumbnail}}"/>-->
+      <!--<p>{{entityData.abstract}}</p>-->
+      <!--<ul class="inline-list">-->
+        <!--<li ng-repeat="etype in entityData.types">{{etype}}</li>-->
+      <!--</ul>-->
+    <!--</div>-->
     <!--<a >{{entity.name}} <small>{{entity.weigth}}</small></a>-->
     <a ng-click="deleteEntity()" style="color:darkred;" ng-if="editMode">X</a>
   </div>

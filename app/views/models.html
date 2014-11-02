@@ -5,27 +5,26 @@
         </div>
         <div class="row">
 
-          <ul class="button-group column large-2 large-offset-10">
-            <li ng-hide="editMode"><a ng-click="enterEditMode()" class="button tiny" >edit</a></li>
-            <li ng-show="editMode"><a ng-click="handlingSave()" class="button tiny alert" >save</a></li>
-            <li ng-show="editMode"><a ng-click="handlingCancel()" class="button tiny secondary" >cancel</a></li>
-          </ul>
+          <div class="btn-group right">
+            <a ng-hide="editMode" ng-click="enterEditMode()" class="btn btn-sm btn-default" >edit</a>
+            <a ng-show="editMode" ng-click="handlingSave()" class="btn btn-sm btn-danger" >save</a>
+            <a ng-show="editMode" ng-click="handlingCancel()" class="btn btn-sm btn-default" >cancel</a>
+          </div>
         </div>
-        <div class="row row-all-left column-container" data-equalizer>
-          <div class="large-12 column column-wrapper" ng-style="categoriesStyle">
+        <div class="row column-container" data-equalizer>
+          <div class="col-lg-12 column column-wrapper" ng-style="categoriesStyle">
           <!--<div class="large-12 column column-wrapper" >-->
-            <div ng-repeat="category in model.categories" class="column-item" ng-class="generateCategoryColor($index)" data-equalizer-watch>
-              <ul class="pricing-table">
-                <li class="title">{{category.name}}</li>
-                <li class="bullet-item" ng-class="generateEntityColor(topic)" ng-repeat="topic in category.topics | orderBy:weigth">
+            <article ng-repeat="category in model.categories" class="column-item" ng-class="generateCategoryColor($index)" data-equalizer-watch>
+
+                <div><h4 style="font-variant: small-caps">{{category.name}}</h4></div>
+                <div class="topic-entity" ng-class="generateEntityColor(topic)" ng-repeat="topic in category.topics | orderBy:weigth">
                   <topic-entity entity="topic" edit-mode="editMode" category="category.name"></topic-entity>
-                </li>
-                <li class="cta-button">
-                    <a class="button tiny" >Add</a>
-                    <a class="button tiny alert" >Delete</a>
-                </li>
-              </ul>
-            </div>
+                </div>
+                <div class="cta-button">
+                    <a class="btn btn-small btn-default" >Add</a>
+                    <a class="btn btn-small btn-danger" >Delete</a>
+                </div>
+            </article>
           </div>
         </div>
             <!--<div class="row">-->
