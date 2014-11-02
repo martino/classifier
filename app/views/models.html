@@ -3,27 +3,47 @@
         <div class="row">
             <h1>{{model.description}} <small>{{model.id}}</small></h1>
         </div>
-
-        <div ng-repeat="category in model.categories" class="row">
-            <div class="row">
-              <div class="column column-auto">
-                <h2 style="font-variant: small-caps;">{{category.name}} <small>#{{category.topics.length}}</small></h2>
-              </div>
-              <div class="column column-auto">
-                <ul class="button-group">
-                  <li ng-hide="editMode"><a ng-click="enterEditMode()" class="button tiny" >edit</a></li>
-                  <li ng-show="editMode"><a ng-click="handlingSave()" class="button tiny alert" >save</a></li>
-                  <li ng-show="editMode"><a ng-click="handlingCancel()" class="button tiny secondary" >cancel</a></li>
-                </ul>
-              </div>
-
+        <div class="row row-all-left column-container" data-equalizer>
+          <div class="large-12 column column-wrapper" ng-style="categoriesStyle">
+          <!--<div class="large-12 column column-wrapper" >-->
+            <div ng-repeat="category in model.categories" class="column-item" data-equalizer-watch>
+              <ul class="pricing-table">
+                <li class="title">{{category.name}} <small>#{{category.topics.length}}</small></li>
+                <!--<li class="price">$99.99</li> -->
+                <!--<li class="description">An awesome description</li>-->
+                <li class="bullet-item" ng-repeat="topic in category.topics | orderBy:weigth">
+                  <topic-entity entity="topic" edit-mode="editMode" category="category.name"></topic-entity>
+                </li>
+                <li class="cta-button">
+                  <ul class="button-group">
+                    <li ng-hide="editMode"><a ng-click="enterEditMode()" class="button tiny" >edit</a></li>
+                    <li ng-show="editMode"><a ng-click="handlingSave()" class="button tiny alert" >save</a></li>
+                    <li ng-show="editMode"><a ng-click="handlingCancel()" class="button tiny secondary" >cancel</a></li>
+                  </ul>
+                </li>
+              </ul>
             </div>
-            <div class="row row-all-left" data-equalizer>
-              <div class="large-3 columns" data-equalizer-watch ng-repeat="topic in category.topics | orderBy:weigth">
-                <topic-entity entity="topic" edit-mode="editMode" category="category.name"></topic-entity>
-              </div>
-            </div>
-
+          </div>
         </div>
+            <!--<div class="row">-->
+              <!--<div class="column column-auto">-->
+                <!--<h2 style="font-variant: small-caps;">{{category.name}} <small>#{{category.topics.length}}</small></h2>-->
+              <!--</div>-->
+              <!--<div class="column column-auto">-->
+                <!--<ul class="button-group">-->
+                  <!--<li ng-hide="editMode"><a ng-click="enterEditMode()" class="button tiny" >edit</a></li>-->
+                  <!--<li ng-show="editMode"><a ng-click="handlingSave()" class="button tiny alert" >save</a></li>-->
+                  <!--<li ng-show="editMode"><a ng-click="handlingCancel()" class="button tiny secondary" >cancel</a></li>-->
+                <!--</ul>-->
+              <!--</div>-->
+
+            <!--</div>-->
+            <!--<div class="row row-all-left" data-equalizer>-->
+              <!--<div class="large-3 columns" data-equalizer-watch ng-repeat="topic in category.topics | orderBy:weigth">-->
+                <!--<topic-entity entity="topic" edit-mode="editMode" category="category.name"></topic-entity>-->
+              <!--</div>-->
+            <!--</div>-->
+
+        <!--</div>-->
     </div>
 </div>
