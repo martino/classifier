@@ -8,24 +8,6 @@
   padding: 0.2em 0;
 }
 
-.row-all-left {
-  [class*="column"] + [class*="column"]:last-child {
-    float: left;
-  }
-}
-
-.topic-image-bg {
-  width: 100%;
-  height: 150px;
-  background-size: cover;
-  background-image: url('http://placekitten.com/g/300/200');
-}
-
-
-.column-auto {
-  float: left;
-  width: auto;
-}
 
 .column-container {
   overflow-x: scroll;
@@ -58,4 +40,7 @@ $colors : #c1ddc7, #d7db7d, #bbcd77, #dfc590, #e4cdbf;
   }
 }
 
+.topic-entity {
+  padding: 5% 7%;
+}
 
