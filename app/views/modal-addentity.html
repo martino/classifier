@@ -1,0 +1,40 @@
+<div class="modal-header">
+  <h3 style="display:inline-block" class="modal-title">
+    Enrich your topic
+  </h3>
+
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-11 typeahead-wrapper">
+      <input type="text" ng-model="entitySelected"
+             placeholder="Enter entity name"
+             typeahead="e as e.name for e in getEntities($viewValue)"
+             typeahead-template-url="views/entityCustomTempalateTA.html"
+             typeahead-wait-ms="5"
+             typeahead-min-length="3"
+             typeahead-loading="loadingEntities" class="form-control">
+    </div>
+    <div class="col-md-1">
+      <i ng-show="loadingEntities" class="glyphicon glyphicon-refresh"></i>
+    </div>
+  </div>
+
+  <article ng-show="entitySelected.url" class="row" style="margin-top:10px;">
+    <div class="col-md-3">
+      <img ng-show="entitySelected.image" ng-src="{{entitySelected.image}}" style="width:100%;">
+    </div>
+    <div class="col-md-9">
+      <h5>{{entitySelected.name}} <small><a ng-href="{{entitySelected.url}}" target="_blank" style="font-variant: small-caps">wikipedia</a></small></h5>
+      <p style="height: 100px;overflow-y:scroll">
+        {{entitySelected.abstract}}
+      </p>
+    </div>
+
+  </article>
+
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()">OK</button>
+  <button class="btn btn-default" ng-click="cancel()">Close</button>
+</div>

@@ -1,0 +1,7 @@
+<a class="clearfix">
+  <img class="pull-left" ng-show="match.model.image" ng-src="{{match.model.image}}" width="50" style="margin-right: 10px;">
+  <div class="pull-left" style="max-width: 400px;">
+    <strong bind-html-unsafe="match.model.name | typeaheadHighlight:query"></strong>
+    <p style="white-space: normal;">{{match.model.abstract|words:20:ignoreSpaces }}</p>
+  </div>
+</a>

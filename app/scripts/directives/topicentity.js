@@ -29,16 +29,13 @@ angular.module('classifierApp')
         scope.entityData = datatxt.getTopic(scope.entity.wikipage, 'it');
 
         scope.openDetails = function () {
-          var template = 'entityDetails-' + scope.entityData.id + '.html'
-          template = 'views/modal-topicentity.html'
-          console.log(template);
           var modalInstance = $modal.open({
-            templateUrl: template,
+            templateUrl: 'views/modal-topicentity.html',
             controller: 'EntitymodaldetailsCtrl',
             size: 'lg',
             resolve: {
               entity: function () {
-                console.log('resolve')
+                console.log('resolve', scope.entityData)
                 return scope.entityData;
               }
             }
