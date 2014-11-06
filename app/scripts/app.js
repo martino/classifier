@@ -20,7 +20,8 @@ angular
     'angles',
     'ngLodash',
     'LocalStorageModule',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'truncate'
   ])
   .config(function ($routeProvider) {
     $routeProvider

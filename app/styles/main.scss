@@ -44,3 +44,8 @@ $colors : #c1ddc7, #d7db7d, #bbcd77, #dfc590, #e4cdbf;
   padding: 5% 7%;
 }
 
+.typeahead-wrapper ul {
+  max-height: 443px;
+  overflow-y: scroll;
+}
+
