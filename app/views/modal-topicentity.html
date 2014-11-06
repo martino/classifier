@@ -1,12 +1,25 @@
 <div class="modal-header">
-  <h3 class="modal-title">{{entity.title}}</h3>
+  <h3 style="display:inline-block" class="modal-title">{{entity.title}}
+    <small>
+      <a style="font-variant:small-caps;" target="_blank" href="{{entity.lod.wikipedia}}">wikipedia</a>
+      <a style="font-variant:small-caps;" target="_blank" href="{{entity.lod.dbpedia}}">dbpedia</a>
+    </small>
+  </h3>
+
+  <div class="pull-right">
+      <span style="margin-right: 5px;" ng-repeat="entityType in entity.types" class="label label-default">{{getTopicName(entityType)}}</span>
+  </div>
 </div>
 <div class="modal-body">
-  <p>{{entity.abstract}}</p>
-  <img ng-src="{{entity.imageThumbnail}}">
 
+  <p class="clearfix"><img style="margin-right: 10px" class="pull-left" ng-src="{{entity.imageThumbnail}}"> {{entity.abstract}}</p>
+
+  <h5>Categories</h5>
+  <ul class="list-inline">
+    <li ng-repeat="category in entity.categories"> {{category}} </li>
+  </ul>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="ok()">OK</button>
-  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  <!--<button class="btn btn-primary" ng-click="ok()">OK</button>-->
+  <button class="btn btn-default" ng-click="cancel()">Close</button>
 </div>

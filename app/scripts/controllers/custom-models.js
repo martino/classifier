@@ -8,7 +8,7 @@
  * Controller of the classifierApp
  */
 angular.module('classifierApp')
-  .controller('CustomModelsCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'datatxt', 'lodash', function ($rootScope, $scope, $location, $routeParams, datatxt, _) {
+  .controller('CustomModelsCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'datatxt', 'lodash', '$modal', function ($rootScope, $scope, $location, $routeParams, datatxt, _, $modal) {
     $scope.model = {};
     $rootScope.page = 'models';
     $scope.editMode = false;
@@ -120,5 +120,36 @@ angular.module('classifierApp')
         return el.wikipage !== data.entity;
       });
     });
+
+    var addItemToCategory = function (categoryName, items) {
+      var category = _.where($scope.model.categories, {name: categoryName})[0];
+      _.each(items, function(item) {
+        category.topics.push({
+          'wikipage': item.url,
+          'weigth': 10,
+          'name': item.name
+        });
+      });
+
+      $scope.handlingSave();
+    };
+
+    $scope.openAddTopic = function (category) {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/modal-addentity.html',
+        controller: 'AddentitymodalCtrl',
+        resolve: {
+          entity: function () {
+            return {};
+          }
+        }
+      });
+
+      modalInstance.result.then(function (selectedItem) {
+        addItemToCategory(category, [selectedItem]);
+      }, function (data) {
+        console.log('dismiss', data)
+      });
+    };
 
   }]);

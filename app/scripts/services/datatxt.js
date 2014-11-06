@@ -14,7 +14,8 @@ angular.module('classifierApp')
       urls: {
         classifier: '/datatxt/cl/v1/',
         models: '/datatxt/cl/models/v1/',
-        topics: '/_topic'
+        topics: '/_topic',
+        wikisearch: '/datagraph/wikisearch/v1'
       },
       credentials: {
         '$app_id': '***REMOVED***',
@@ -135,12 +136,30 @@ angular.module('classifierApp')
       }
     };
 
+    var wikiSearch = function (text, limit) {
+      var query = {
+        'lang': 'it',
+        'text': text,
+        'limit': limit || 10,
+        'include': 'abstract, image'
+      };
+      query = addAuth(query);
+
+      var request = {
+        method: 'GET',
+        url: dataTXT.urls.wikisearch,
+        params: query
+      };
+      return queryDataTXT(request);
+    };
+
     return {
       'classifier': classifier,
       'getAllModels': getAllModels,
       'getModel': getModel,
       'updateModel': updateModel,
       //'getTopicDetails': getTopicDetails,
-      'getTopic': getTopic
+      'getTopic': getTopic,
+      'wikiSearch': wikiSearch
     }
   }]);
