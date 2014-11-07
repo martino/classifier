@@ -48,6 +48,7 @@ angular.module('classifierApp')
         }});
         model.categories.push(newCategory)
       });
+      console.log(model)
       $scope.categoriesStyle.width = (model.categories.length * 300 + 100) + 'px';
       return model;
     };
