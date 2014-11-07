@@ -17,7 +17,7 @@
             <!--<div class="large-12 column column-wrapper" >-->
               <article ng-repeat="category in model.categories" class="column-item" ng-class="generateCategoryColor($index)" data-equalizer-watch>
                   <div><h4 style="font-variant: small-caps">{{category.name}}</h4></div>
-                  <div class="topic-entity" ng-class="generateEntityColor(topic)" ng-repeat="topic in category.topics | orderBy:'weigth':true">
+                  <div class="topic-entity animation-fade" ng-class="generateEntityColor(topic)" ng-repeat="topic in category.topics | orderBy:'weight':true">
                     <topic-entity entity="topic" edit-mode="editMode" category="category.name"></topic-entity>
                   </div>
                   <div class="cta-button">

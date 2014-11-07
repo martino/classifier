@@ -10,6 +10,7 @@
 angular.module('classifierApp')
   .controller('AddentitymodalCtrl', function ($scope, $modalInstance, entity, datatxt) {
     $scope.entity = entity;
+    $scope.max = 10;
     //$scope.selected = {
     //item: $scope.items[0]
     //};
@@ -26,7 +27,8 @@ angular.module('classifierApp')
               'name': item.title,
               'image': image.thumbnail,
               'abstract': item.abstract,
-              'url': item.uri
+              'url': item.uri,
+              'weight': 10
             };
           })
         }, function () {
