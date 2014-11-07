@@ -89,6 +89,14 @@ angular.module('classifierApp')
       $scope.modelBackup = _.cloneDeep($scope.model);
     };
 
+    $scope.enableEdit = function (item) {
+      item.visible = true;
+    };
+
+    $scope.disableEdit = function (item) {
+      item.visible = false;
+    };
+
     var disableEditMode = function () {
       $scope.editMode = false;
       $scope.modelBackup = null;
@@ -105,20 +113,43 @@ angular.module('classifierApp')
       disableEditMode();
     };
 
+    $scope.$on('addRelated', function (event, data) {
+      datatxt.getRel(data.entity).then(function (data) {
+
+        var modalInstance = $modal.open({
+          templateUrl: 'views/modal-addentity.html',
+          controller: 'AddentitymodalCtrl',
+          resolve: {
+            entities: function () {
+              return data.related;
+            }
+          }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+          addItemToCategory(category, selectedItem);
+        }, function (data) {
+          console.log('dismiss', data)
+        });
+      })
+    });
+
     $scope.$on('deleteEntity', function (event, data) {
       var category = _.where($scope.model.categories, {name:data.category})[0];
       category.topics = _.filter(category.topics, function (el) {
         return el.wikipage !== data.entity;
       });
+
+      $scope.handlingSave();
     });
 
     var addItemToCategory = function (categoryName, items) {
       var category = _.where($scope.model.categories, {name: categoryName})[0];
       _.each(items, function(item) {
         category.topics.push({
-          'wikipage': item.url,
+          'wikipage': item.uri,
           'weight': item.weight,
-          'name': item.name
+          'name': item.title
         });
       });
 
@@ -130,8 +161,8 @@ angular.module('classifierApp')
         templateUrl: 'views/modal-addentity.html',
         controller: 'AddentitymodalCtrl',
         resolve: {
-          entity: function () {
-            return {};
+          entities: function () {
+            return null;
           }
         }
       });

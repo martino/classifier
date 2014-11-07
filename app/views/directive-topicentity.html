@@ -7,7 +7,7 @@
 
   <div>
     <!--<a href="{{entity.wikipage}}" target="_blank">{{entity.name}} <small>{{entity.weigth}}</small></a>-->
-    <a ng-click="openDetails()">{{entity.name}} <small>{{entity.weigth}}</small></a>
+    <a class="cursor-pointer" ng-click="openDetails()">{{entity.name}} <small>{{entity.weigth}}</small></a>
     <!--<div id="drop-{{entityData.id}}" data-dropdown-content class="f-dropdown content text-left" aria-hidden="true" tabindex="-1">-->
       <!--<h4>{{entityData.title}}</h4>-->
       <!--<img ng-src="{{entityData.imageThumbnail}}"/>-->
@@ -17,7 +17,12 @@
       <!--</ul>-->
     <!--</div>-->
     <!--<a >{{entity.name}} <small>{{entity.weigth}}</small></a>-->
-    <a class="animation-fade" ng-click="deleteEntity()" style="color:darkred;cursor:pointer;" ng-if="editMode"><span class="glyphicon glyphicon-remove"></span></a>
+    <div class="animation-fade display-inline" ng-show="entity.visible">
+      <!--<a class="animation-fade" ng-click="deleteEntity()" style="color:darkred;cursor:pointer;" ng-if="editMode"><span class="glyphicon glyphicon-remove"></span></a>-->
+      <a class="cursor-pointer" ng-click="deleteEntity()" style="color:darkred;"><span class="glyphicon glyphicon-remove"></span></a>
+      <a class="cursor-pointer" ng-click="openDetails()"><span class="glyphicon glyphicon-eye-open"></span></a>
+      <a class="cursor-pointer" ng-click="addRelated()"><span class="glyphicon glyphicon-link"></span></a>
+    </div>
   </div>
 
   <!--<div>-->

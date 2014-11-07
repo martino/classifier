@@ -7,7 +7,7 @@
  * # topicEntity
  */
 angular.module('classifierApp')
-  .directive('topicEntity', ['datatxt', '$modal', function (datatxt, $modal) {
+  .directive('topicEntity', ['datatxt', '$modal', '$window', function (datatxt, $modal, $window) {
     return {
       templateUrl: 'views/directive-topicentity.html',
       restrict: 'E',
@@ -19,12 +19,21 @@ angular.module('classifierApp')
       link: function postLink(scope, element, attrs) {
         scope.entityData = null;
         scope.deleteEntity = function () {
+          if ($window.confirm('Are you sure you want to delete this?')) {
+            scope.$emit(
+              'deleteEntity',
+              {'entity':scope.entity.wikipage, 'category': scope.category}
+            )
+          }
+        };
+        scope.entityData = datatxt.getTopic(scope.entity.wikipage, 'it');
+
+        scope.addRelated = function () {
           scope.$emit(
-            'deleteEntity',
+            'addRelated',
             {'entity':scope.entity.wikipage, 'category': scope.category}
           )
         };
-        scope.entityData = datatxt.getTopic(scope.entity.wikipage, 'it');
 
         scope.openDetails = function () {
           var modalInstance = $modal.open({

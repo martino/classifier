@@ -1,4 +1,4 @@
-<div ng-controller="CustomModelsCtrl" class="container">
+<div class="container">
     <div ng-if="model">
         <div class="row">
             <h1>{{model.description}} <small>{{model.id}}</small></h1>
@@ -17,7 +17,7 @@
             <!--<div class="large-12 column column-wrapper" >-->
               <article ng-repeat="category in model.categories" class="column-item" ng-class="generateCategoryColor($index)" data-equalizer-watch>
                   <div><h4 style="font-variant: small-caps">{{category.name}}</h4></div>
-                  <div class="topic-entity animation-fade" ng-class="generateEntityColor(topic)" ng-repeat="topic in category.topics | orderBy:'weight':true">
+                  <div class="topic-entity animation-fade" ng-class="generateEntityColor(topic)" ng-repeat="topic in category.topics | orderBy:'weight':true" ng-mouseover="enableEdit(topic)" ng-mouseleave="disableEdit(topic)">
                     <topic-entity entity="topic" edit-mode="editMode" category="category.name"></topic-entity>
                   </div>
                   <div class="cta-button">

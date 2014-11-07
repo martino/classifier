@@ -8,8 +8,11 @@
  * Controller of the classifierApp
  */
 angular.module('classifierApp')
-  .controller('AddentitymodalCtrl', function ($scope, $modalInstance, entity, datatxt) {
-    $scope.entity = entity;
+  .controller('AddentitymodalCtrl', function ($scope, $modalInstance, entities, datatxt) {
+    console.log(entities)
+    if (entities !== undefined){
+      $scope.entities = entities;
+    }
     $scope.max = 10;
     //$scope.selected = {
     //item: $scope.items[0]
@@ -22,12 +25,11 @@ angular.module('classifierApp')
         function (response){
           $scope.loadingEntities = false;
           return response.entities.map(function (item) {
-            var image = item.image || {};
             return {
-              'name': item.title,
-              'image': image.thumbnail,
+              'title': item.title,
+              'image': item.image,
               'abstract': item.abstract,
-              'url': item.uri,
+              'uri': item.uri,
               'weight': 10
             };
           })

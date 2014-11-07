@@ -14,6 +14,7 @@ angular.module('classifierApp')
       urls: {
         classifier: '/datatxt/cl/v1/',
         models: '/datatxt/cl/models/v1/',
+        rel: '/datatxt/rel/v1',
         topics: '/_topic',
         wikisearch: '/datagraph/wikisearch/v1'
       },
@@ -25,13 +26,11 @@ angular.module('classifierApp')
 
     var queryDataTXT = function (request) {
       var deferred = $q.defer();
-
       $http(request)
         .success(function (data) {
           deferred.resolve(data)
         })
         .error(function (error) {
-          console.log(error);
           deferred.reject();
         });
 
@@ -153,6 +152,21 @@ angular.module('classifierApp')
       return queryDataTXT(request);
     };
 
+    var getRel = function (topic) {
+      var query = {
+        'topic': topic,
+        'include': 'abstract, image'
+      };
+      query = addAuth(query);
+
+      var request = {
+        method: 'GET',
+        url: dataTXT.urls.rel,
+        params: query
+      };
+      return queryDataTXT(request);
+    };
+
     return {
       'classifier': classifier,
       'getAllModels': getAllModels,
@@ -160,6 +174,7 @@ angular.module('classifierApp')
       'updateModel': updateModel,
       //'getTopicDetails': getTopicDetails,
       'getTopic': getTopic,
-      'wikiSearch': wikiSearch
+      'wikiSearch': wikiSearch,
+      'getRel': getRel
     }
   }]);
