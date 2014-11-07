@@ -37,7 +37,6 @@ angular.module('classifierApp')
     };
 
     $scope.ok = function () {
-      //$modalInstance.close($scope.selected.item);
       $modalInstance.close($scope.entitySelected);
     };
 
