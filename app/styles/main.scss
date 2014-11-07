@@ -61,11 +61,11 @@
 //  content: none;
 //}
 
-.topic-entity.ng-enter {
+.animation-fade.ng-enter {
   animation: fadeIn 0.5s;
 }
 
-.topic-entity.ng-leave {
+.animation-fade.ng-leave {
   animation: fadeOut 0.5s;
 }
 
