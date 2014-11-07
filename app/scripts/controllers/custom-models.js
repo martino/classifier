@@ -26,7 +26,7 @@ angular.module('classifierApp')
       return 'color-' + (index + 1);
     };
     $scope.generateEntityColor = function (topic) {
-      return 'color-weight-' + topic.weigth;
+      return 'color-weight-' + topic.weight;
     };
 
     var loadModel = function () {
@@ -43,7 +43,7 @@ angular.module('classifierApp')
         };
         newCategory.topics = _.map(category.topics, function(el, key){ return {
           'wikipage': key,
-          'weigth': Number((el).toFixed(1)),
+          'weight': Number((el).toFixed(1)),
           'name': $scope.formatWikipage(key)
         }});
         model.categories.push(newCategory)
@@ -64,7 +64,7 @@ angular.module('classifierApp')
           'topics': {}
         };
         _.each(data.topics, function (data) {
-          category.topics[data.wikipage] = data.weigth;
+          category.topics[data.wikipage] = data.weight;
         });
 
         return category;
@@ -82,15 +82,6 @@ angular.module('classifierApp')
       var result = wikipage.split('/');
       result = result[result.length-1];
       return decodeURIComponent(result).replace(/_/g, ' ');
-    };
-
-    $scope.orderTopics = function (topics) {
-      var result = _.each(topics, function(el, key){ return {
-        'wikipage': key,
-        'weigth': el
-      }});
-      result = _.map(_.sortBy(result, 'weigth'), _.values);
-      return result;
     };
 
     $scope.enterEditMode = function () {
@@ -126,7 +117,7 @@ angular.module('classifierApp')
       _.each(items, function(item) {
         category.topics.push({
           'wikipage': item.url,
-          'weigth': 10,
+          'weight': item.weight,
           'name': item.name
         });
       });
