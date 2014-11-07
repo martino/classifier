@@ -9,11 +9,16 @@
   padding: 0.2em 0;
 }
 
-
+.display-inline {
+  display: inline-block;
+}
 .column-container {
   overflow-x: scroll;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
 .column-wrapper {
   white-space: nowrap;
   max-width: 100000px;

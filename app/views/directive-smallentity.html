@@ -1,0 +1,14 @@
+<article ng-show="entity.uri" class="row panel" style="margin-top:10px;">
+  <div class="col-md-3">
+    <img ng-show="entity.image.thumbnail" ng-src="{{entity.image.thumbnail}}" style="width:100%;">
+  </div>
+  <div class="col-md-9">
+    <h5>{{entity.title}} <small><a ng-href="{{entity.uri}}" target="_blank" style="font-variant: small-caps">wikipedia</a></small></h5>
+    <p style="height: 100px;overflow-y:scroll">
+      {{entity.abstract}}
+    </p>
+    <div>
+      <rating ng-model="entity.weight" max="maxrating" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
+    </div>
+  </div>
+</article>
