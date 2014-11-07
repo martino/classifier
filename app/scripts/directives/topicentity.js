@@ -17,8 +17,6 @@ angular.module('classifierApp')
         category: '='
       },
       link: function postLink(scope, element, attrs) {
-        var entityDetails;
-
         scope.entityData = null;
         scope.deleteEntity = function () {
           scope.$emit(
@@ -35,7 +33,6 @@ angular.module('classifierApp')
             size: 'lg',
             resolve: {
               entity: function () {
-                console.log('resolve', scope.entityData)
                 return scope.entityData;
               }
             }
@@ -44,12 +41,8 @@ angular.module('classifierApp')
           modalInstance.result.then(function (selectedItem) {
             scope.selected = selectedItem;
           }, function (data) {
-            console.log('dismiss', data)
           });
         };
-
-        window.merda = scope.openDetails;
-
       }
     };
   }]);
