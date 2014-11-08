@@ -28,6 +28,16 @@ angular.module('classifierApp')
     $scope.generateEntityColor = function (topic) {
       return 'color-weight-' + topic.weight;
     };
+    $scope.generateBGImage = function (topic) {
+      var data = datatxt.getTopic(topic.wikipage, 'it');
+      if ('imageThumbnail' in data) {
+        return {
+          'background-size': 'cover',
+          'background-image': "url(" + data.imageThumbnail + ")"
+        }
+      }
+      return {};
+    };
 
     var loadModel = function () {
       var datatxtModel = $scope.dtModel
