@@ -1,7 +1,9 @@
 <a class="clearfix">
-  <img class="pull-left" ng-show="match.model.image.thumbnail" ng-src="{{match.model.image.thumbnail}}" width="50" style="margin-right: 10px;">
   <div class="pull-left" style="max-width: 400px;">
-    <strong bind-html-unsafe="match.model.title | typeaheadHighlight:query"></strong>
-    <p style="white-space: normal;">{{match.model.abstract|words:20:ignoreSpaces }}</p>
+    <p style="white-space: normal;">
+      <strong bind-html-unsafe="match.model.title | typeaheadHighlight:query"></strong>
+      {{match.model.abstract|words:20:ignoreSpaces }}
+    </p>
   </div>
+  <img class="pull-left" ng-show="match.model.image.thumbnail" ng-src="{{match.model.image.thumbnail}}" width="50" style="margin-left: 10px;">
 </a>

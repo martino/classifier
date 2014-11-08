@@ -9,15 +9,16 @@
  */
 angular.module('classifierApp')
   .controller('AddentitymodalCtrl', function ($scope, $modalInstance, entities, datatxt) {
-    console.log(entities)
     if (entities !== undefined){
-      $scope.entities = entities;
+      $scope.entities = entities.map(function (e) {
+        e.topic.weight = 5;
+        return e
+      });
     }
     $scope.max = 10;
     //$scope.selected = {
     //item: $scope.items[0]
     //};
-
 
     $scope.getEntities = function(val) {
       $scope.loadingEntities = true;
@@ -41,7 +42,15 @@ angular.module('classifierApp')
     };
 
     $scope.ok = function () {
-      $modalInstance.close($scope.entitySelected);
+      if ('entities' in $scope){
+        var selectedEntities = $scope.entities
+          .filter(function (e) {return e.selected})
+          .map(function(e){return e.topic;})
+
+        $modalInstance.close(selectedEntities);
+      } else {
+        $modalInstance.close($scope.entitySelected);
+      }
     };
 
     $scope.cancel = function () {

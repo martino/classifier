@@ -16,7 +16,6 @@ angular.module('classifierApp')
         maxrating: '='
       },
       link: function postLink(scope, element, attrs) {
-
       }
     };
   });
