@@ -6,8 +6,13 @@
 </div>
 <div class="modal-body">
   <div ng-show="entities">
-    <div ng-repeat="entity in entities">
-      <small-entity entity="entity.topic" maxrating="max"></small-entity>
+    <div class="row" ng-repeat="entity in entities">
+      <div class="col-md-1">
+        <input type="checkbox" ng-model="entity.selected"/>
+      </div>
+      <div class="col-md-11">
+        <small-entity entity="entity.topic" maxrating="max"></small-entity>
+      </div>
     </div>
   </div>
   <div ng-hide="entities">
