@@ -19,12 +19,10 @@ angular.module('classifierApp')
       link: function postLink(scope, element, attrs) {
         scope.entityData = null;
         scope.deleteEntity = function () {
-          if ($window.confirm('Are you sure you want to delete this?')) {
-            scope.$emit(
-              'deleteEntity',
-              {'entity':scope.entity.wikipage, 'category': scope.category}
-            )
-          }
+          scope.$emit(
+            'deleteEntity',
+            {'entity':scope.entity.wikipage, 'category': scope.category}
+          )
         };
         scope.entityData = datatxt.getTopic(scope.entity.wikipage, 'it');
 
