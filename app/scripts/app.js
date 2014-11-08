@@ -21,7 +21,8 @@ angular
     'ngLodash',
     'LocalStorageModule',
     'ui.bootstrap',
-    'truncate'
+    'truncate',
+    'pasvaz.bindonce'
   ])
   .config(function ($routeProvider) {
     $routeProvider

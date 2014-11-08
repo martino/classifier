@@ -114,20 +114,20 @@ angular.module('classifierApp')
     };
 
     $scope.$on('addRelated', function (event, data) {
-      datatxt.getRel(data.entity).then(function (data) {
+      datatxt.getRel(data.entity).then(function (res) {
 
         var modalInstance = $modal.open({
           templateUrl: 'views/modal-addentity.html',
           controller: 'AddentitymodalCtrl',
           resolve: {
             entities: function () {
-              return data.related;
+              return res.related;
             }
           }
         });
 
         modalInstance.result.then(function (selectedItem) {
-          addItemToCategory(category, selectedItem);
+          addItemToCategory(data.category, selectedItem);
         }, function (data) {
           console.log('dismiss', data)
         });
@@ -145,6 +145,7 @@ angular.module('classifierApp')
 
     var addItemToCategory = function (categoryName, items) {
       var category = _.where($scope.model.categories, {name: categoryName})[0];
+      console.log(categoryName, category)
       _.each(items, function(item) {
         category.topics.push({
           'wikipage': item.uri,
