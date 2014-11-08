@@ -1,7 +1,7 @@
 <article ng-show="entity.uri" class="row panel" style="margin-top:10px;">
   <div ng-class="{'col-md-9':entity.image.thumbnail, 'col-md-12':!entity.image.thumbnail}">
     <h5>{{entity.title}} <small><a ng-href="{{entity.uri}}" target="_blank" style="font-variant: small-caps">wikipedia</a></small></h5>
-    <p style="height: 100px;overflow-y:scroll">
+    <p style="max-height: 100px;overflow-y:auto">
       {{entity.abstract}}
     </p>
     <div>
