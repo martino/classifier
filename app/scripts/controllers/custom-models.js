@@ -100,11 +100,11 @@ angular.module('classifierApp')
     };
 
     $scope.enableEdit = function (item) {
-      item.visible = true;
+      item.hover = true;
     };
 
     $scope.disableEdit = function (item) {
-      item.visible = false;
+      item.hover = false;
     };
 
     var disableEditMode = function () {
@@ -144,12 +144,19 @@ angular.module('classifierApp')
       })
     });
 
-    $scope.$on('deleteEntity', function (event, data) {
-      var category = _.where($scope.model.categories, {name:data.category})[0];
+    var deleteEntity = function (categoryName, entity) {
+      var category = _.where($scope.model.categories, {name:categoryName})[0];
       category.topics = _.filter(category.topics, function (el) {
-        return el.wikipage !== data.entity;
+        return el.wikipage !== entity;
       });
+    };
 
+    $scope.$on('deleteEntityBulk', function (event, data) {
+      deleteEntity(data.category, data.entity);
+    });
+
+    $scope.$on('deleteEntity', function (event, data) {
+      deleteEntity(data.category, data.entity);
       $scope.handlingSave();
     });
 
