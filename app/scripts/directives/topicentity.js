@@ -18,6 +18,8 @@ angular.module('classifierApp')
       },
       link: function postLink(scope, element, attrs) {
         scope.entityData = null;
+        scope.editWeigthMode = false;
+
         scope.deleteEntity = function (bulk) {
           var signal = 'deleteEntity';
 
@@ -36,6 +38,22 @@ angular.module('classifierApp')
             'addRelated',
             {'entity':scope.entity.wikipage, 'category': scope.category}
           )
+        };
+
+        scope.editWeight = function () {
+          scope.editWeigthMode = true;
+          scope.entityWeight = scope.entity.weight;
+        };
+
+        scope.closeEditWeight = function (saveResult) {
+          if (saveResult) {
+            scope.entity.weight = scope.entityWeight;
+            scope.$emit(
+              'editWeight',
+              {'entity':scope.entity.wikipage, 'category': scope.category, 'weight': scope.entityWeight}
+            )
+          }
+          scope.editWeigthMode = false;
         };
 
         scope.openDetails = function () {

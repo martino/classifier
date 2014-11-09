@@ -13,14 +13,6 @@ angular.module('classifierApp')
     $rootScope.page = 'models';
     $scope.editMode = false;
     $scope.categoriesStyle = {'width': '100%'};
-    //$scope.watch("model", function () {
-    //  var width = '100%';
-    //  if ('categories' in $scope.model) {
-    //    width = $scope.model.categories.length * 300 + 100;
-    //  }
-    //  $scope.categoriesStyle.width = width;
-    //});
-    //
 
     $scope.generateCategoryColor = function (index) {
       return 'color-' + (index + 1);
@@ -139,7 +131,7 @@ angular.module('classifierApp')
         modalInstance.result.then(function (selectedItem) {
           addItemToCategory(data.category, selectedItem);
         }, function (data) {
-          console.log('dismiss', data)
+
         });
       })
     });
@@ -157,6 +149,13 @@ angular.module('classifierApp')
 
     $scope.$on('deleteEntity', function (event, data) {
       deleteEntity(data.category, data.entity);
+      $scope.handlingSave();
+    });
+
+    $scope.$on('editWeight', function (event, data, weight) {
+      var category = _.where($scope.model.categories, {name:data.category})[0]
+        , entity = _.where(category.topics, {wikipage: data.wikipage});
+      entity.weight = weight;
       $scope.handlingSave();
     });
 
