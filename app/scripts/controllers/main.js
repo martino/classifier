@@ -59,6 +59,7 @@ angular.module('classifierApp')
       $scope.fileContent = $fileContent;
       $scope.classifierResults = $scope.classifyText($fileContent);
     };
+
     datatxt.getAllModels().then(function (data) {
       var items = data.items, models = [];
 
