@@ -162,7 +162,6 @@ angular.module('classifierApp')
 
     var addItemToCategory = function (categoryName, items) {
       var category = _.where($scope.model.categories, {name: categoryName})[0];
-      console.log(categoryName, category)
       _.each(items, function(item) {
         category.topics.push({
           'wikipage': item.uri,
@@ -188,7 +187,7 @@ angular.module('classifierApp')
       modalInstance.result.then(function (selectedItem) {
         addItemToCategory(category, [selectedItem]);
       }, function (data) {
-        console.log('dismiss', data)
+
       });
     };
 
