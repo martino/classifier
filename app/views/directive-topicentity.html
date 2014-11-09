@@ -17,11 +17,14 @@
       <!--</ul>-->
     <!--</div>-->
     <!--<a >{{entity.name}} <small>{{entity.weigth}}</small></a>-->
-    <div class="animation-fade display-inline" ng-show="entity.visible">
+    <div class="animation-fade display-inline" ng-show="entity.hover" ng-if="!editMode">
       <!--<a class="animation-fade" ng-click="deleteEntity()" style="color:darkred;cursor:pointer;" ng-if="editMode"><span class="glyphicon glyphicon-remove"></span></a>-->
       <a class="cursor-pointer" ng-click="deleteEntity()" ng-confirm-click="Are you sure you want to delete this?" style="color:darkred;"><span class="glyphicon glyphicon-remove"></span></a>
       <a class="cursor-pointer" ng-click="openDetails()"><span class="glyphicon glyphicon-eye-open"></span></a>
       <a class="cursor-pointer" ng-click="addRelated()"><span class="glyphicon glyphicon-link"></span></a>
+    </div>
+    <div class="animation-fade display-inline" ng-show="editMode">
+      <a ng-click="deleteEntity(true)" style="color:darkred;cursor:pointer;" ><span class="glyphicon glyphicon-remove"></span></a>
     </div>
   </div>
 

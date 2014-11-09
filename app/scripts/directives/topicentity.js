@@ -18,9 +18,14 @@ angular.module('classifierApp')
       },
       link: function postLink(scope, element, attrs) {
         scope.entityData = null;
-        scope.deleteEntity = function () {
+        scope.deleteEntity = function (bulk) {
+          var signal = 'deleteEntity';
+
+          if (bulk)
+            signal = 'deleteEntityBulk';
+
           scope.$emit(
-            'deleteEntity',
+            signal,
             {'entity':scope.entity.wikipage, 'category': scope.category}
           )
         };
