@@ -12,8 +12,19 @@
 .display-inline {
   display: inline-block;
 }
+.display-block {
+  display: block;
+}
 .column-container {
   overflow-x: scroll;
+}
+
+.font-small-caps {
+  font-variant: small-caps;
+}
+
+.color-cta {
+  color: darkred;
 }
 
 .cursor-pointer {
@@ -31,6 +42,12 @@
   float: left;
   margin-right: 10px;
   white-space: normal;
+  border-top-width: 5px;
+  border-top-style: solid;
+}
+
+.column-container-wrapper {
+  margin-top: 10px;
 }
 
 //.column-container-wrapper {
@@ -79,9 +96,14 @@ $colors : #c1ddc7, #d7db7d, #bbcd77, #dfc590, #e4cdbf;
 
 @for $i from 1 through length($colors) {
   .color-#{$i} {
+    border-color: nth($colors, $i);
+
     @for $j from 1 through 10 {
       .color-weight-#{$j} {
         background-color: rgba(nth($colors, $i), $j/10);
+        &:hover {
+          border: 2px solid darken(nth($colors, $i), 20%);
+        }
 //        background-blend-mode: soft-light;
 //        background-blend-mode: multiply;
       }

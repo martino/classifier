@@ -9,7 +9,7 @@
  */
 angular.module('classifierApp')
   .controller('AddentitymodalCtrl', function ($scope, $modalInstance, entities, datatxt) {
-    if (entities !== undefined){
+    if (entities !== null){
       $scope.entities = entities.map(function (e) {
         e.topic.weight = 5;
         return e
