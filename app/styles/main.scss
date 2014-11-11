@@ -101,14 +101,19 @@ $colors : #c1ddc7, #d7db7d, #bbcd77, #dfc590, #e4cdbf;
     @for $j from 1 through 10 {
       .color-weight-#{$j} {
         background-color: rgba(nth($colors, $i), $j/10);
+        border: 2px solid rgba(nth($colors, $i), 0);
         &:hover {
-          border: 2px solid darken(nth($colors, $i), 20%);
+          border: 2px dashed darken(nth($colors, $i), 20%);
         }
 //        background-blend-mode: soft-light;
 //        background-blend-mode: multiply;
       }
     }
   }
+}
+
+.color-new {
+  border-color: magenta;
 }
 
 .topic-entity {
