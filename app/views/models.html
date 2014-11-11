@@ -13,14 +13,19 @@
         <div class="column-container-wrapper">
           <div class="row column-container">
             <div class="col-lg-12 column column-wrapper" ng-style="categoriesStyle">
-              <article ng-repeat="category in model.categories" class="column-item" ng-class="generateCategoryColor($index)" data-equalizer-watch>
+              <article ng-repeat="category in model.categories" class="column-item" ng-class="generateCategoryColor($index)">
                   <div><h3 style="font-variant: small-caps">{{category.name}}</h3></div>
                   <div class="topic-entity animation-fade" ng-class="generateEntityColor(topic)" ng-repeat="topic in category.topics | orderBy:'weight':true" ng-mouseover="enableEdit(topic)" ng-mouseleave="disableEdit(topic)">
                     <topic-entity entity="topic" edit-mode="editMode" category="category.name"></topic-entity>
                   </div>
                   <div class="cta-button text-center" style="margin-top: 20px;">
-                      <a class="btn btn-small btn-default" ng-click="openAddTopic(category.name)">Add entity</a>
+                      <a class="btn btn-small btn-default" ng-click="openAddEntity(category.name)">Add entity</a>
                   </div>
+              </article>
+              <article class="column-item color-new">
+                <div class="cta-button text-center" style="margin-top: 20px;">
+                  <a class="btn btn-small btn-default" ng-click="openAddTopic()">Add topic</a>
+                </div>
               </article>
             </div>
           </div>

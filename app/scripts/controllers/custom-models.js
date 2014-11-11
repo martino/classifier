@@ -50,7 +50,7 @@ angular.module('classifierApp')
         }});
         model.categories.push(newCategory)
       });
-      $scope.categoriesStyle.width = (model.categories.length * 300 + 100) + 'px';
+      $scope.categoriesStyle.width = ((model.categories.length + 1) * 300 + 100) + 'px';
       return model;
     };
 
@@ -129,7 +129,7 @@ angular.module('classifierApp')
         });
 
         modalInstance.result.then(function (selectedItem) {
-          addItemToCategory(data.category, selectedItem);
+          addEntityToCategory(data.category, selectedItem);
         }, function (data) {
 
         });
@@ -159,7 +159,7 @@ angular.module('classifierApp')
       $scope.handlingSave();
     });
 
-    var addItemToCategory = function (categoryName, items) {
+    var addEntityToCategory = function (categoryName, items) {
       var category = _.where($scope.model.categories, {name: categoryName})[0];
       _.each(items, function(item) {
         category.topics.push({
@@ -172,7 +172,11 @@ angular.module('classifierApp')
       $scope.handlingSave();
     };
 
-    $scope.openAddTopic = function (category) {
+    $scope.openAddTopic = function () {
+
+    };
+
+    $scope.openAddEntity = function (category) {
       var modalInstance = $modal.open({
         templateUrl: 'views/modal-addentity.html',
         controller: 'AddentitymodalCtrl',
@@ -184,7 +188,7 @@ angular.module('classifierApp')
       });
 
       modalInstance.result.then(function (selectedItem) {
-        addItemToCategory(category, [selectedItem]);
+        addEntityToCategory(category, [selectedItem]);
       }, function (data) {
 
       });
