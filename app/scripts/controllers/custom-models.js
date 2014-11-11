@@ -9,7 +9,8 @@
  */
 angular.module('classifierApp')
   .controller('CustomModelsCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'datatxt', 'lodash', '$modal', function ($rootScope, $scope, $location, $routeParams, datatxt, _, $modal) {
-    $scope.model = {};
+    $scope.model = null;
+    $scope.modelo = null;
     $rootScope.page = 'models';
     $scope.editMode = false;
     $scope.categoriesStyle = {'width': '100%'};
@@ -33,7 +34,7 @@ angular.module('classifierApp')
 
     var fixWidth = function (model) {
       $scope.categoriesStyle.width = ((model.categories.length + 1) * 300 + 100) + 'px';
-    }
+    };
 
     var loadModel = function () {
       var datatxtModel = $scope.dtModel
