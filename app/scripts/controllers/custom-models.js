@@ -31,6 +31,10 @@ angular.module('classifierApp')
       return {};
     };
 
+    var fixWidth = function (model) {
+      $scope.categoriesStyle.width = ((model.categories.length + 1) * 300 + 100) + 'px';
+    }
+
     var loadModel = function () {
       var datatxtModel = $scope.dtModel
         , model = {
@@ -50,7 +54,7 @@ angular.module('classifierApp')
         }});
         model.categories.push(newCategory)
       });
-      $scope.categoriesStyle.width = ((model.categories.length + 1) * 300 + 100) + 'px';
+      fixWidth(model);
       return model;
     };
 
@@ -74,6 +78,9 @@ angular.module('classifierApp')
       datatxt.updateModel($routeParams.modelId, newModel);
     };
 
+    var getCategoryByName = function (categoryName) {
+      return _.where($scope.model.categories, {name:categoryName})[0]
+    };
 
     datatxt.getModel($routeParams.modelId).then(function (data) {
       $scope.dtModel = data.data;
@@ -109,6 +116,31 @@ angular.module('classifierApp')
       disableEditMode();
     };
 
+    $scope.deleteTopic = function (categoryName) {
+      _.remove($scope.model.categories, function (el) {return el.name === categoryName});
+      fixWidth($scope.model);
+    };
+
+    $scope.editTopic = function (category) {
+      category.edit = true;
+      category.nameBackup = category.name;
+    };
+
+    $scope.editTopicSave = function (category) {
+      // TODO check that name is unique
+      category.edit = false;
+      $scope.handlingSave();
+    };
+
+    $scope.editTopicCancel = function (category) {
+      category.name = category.nameBackup;
+      category.edit = false;
+    };
+
+    $scope.addTopicRelated = function (categoryName) {
+      console.log('to be implemented, need backend');
+    };
+
     $scope.handlingCancel = function () {
       $scope.model = _.cloneDeep($scope.modelBackup);
       $scope.modelBackup = null;
@@ -136,8 +168,9 @@ angular.module('classifierApp')
       })
     });
 
+
     var deleteEntity = function (categoryName, entity) {
-      var category = _.where($scope.model.categories, {name:categoryName})[0];
+      var category = getCategoryByName(categoryName);
       category.topics = _.filter(category.topics, function (el) {
         return el.wikipage !== entity;
       });
@@ -153,14 +186,14 @@ angular.module('classifierApp')
     });
 
     $scope.$on('editWeight', function (event, data, weight) {
-      var category = _.where($scope.model.categories, {name:data.category})[0]
+      var category =  getCategoryByName(data.category)
         , entity = _.where(category.topics, {wikipage: data.wikipage});
       entity.weight = weight;
       $scope.handlingSave();
     });
 
     var addEntityToCategory = function (categoryName, items) {
-      var category = _.where($scope.model.categories, {name: categoryName})[0];
+      var category = getCategoryByName(categoryName);
       _.each(items, function(item) {
         category.topics.push({
           'wikipage': item.uri,
@@ -173,7 +206,12 @@ angular.module('classifierApp')
     };
 
     $scope.openAddTopic = function () {
-
+      $scope.model.categories.push({
+        'name': 'New Topic ' + $scope.model.categories.length,
+        'topics': {}
+      });
+      $scope.handlingSave();
+      fixWidth($scope.model);
     };
 
     $scope.openAddEntity = function (category) {
