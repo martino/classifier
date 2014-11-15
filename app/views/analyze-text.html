@@ -40,20 +40,29 @@
 
     <div class="col-md-9">
       <spinner ng-show="loading"></spinner>
-      <div ng-show="error" class="text-center" >
+      <div class="animation-fade" ng-show="error" class="text-center" >
         <h4>Sorry something went wrong :(</h4>
         <iframe src="http://giphy.com/embed/PSyqVLhwDvjXO?html5=true" width="480" height="266" frameBorder="0"
                 webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
       </div>
 
-      <div ng-if="analyzedText && (loading == false)">
+      <div class="animation-fade" ng-if="analyzedText && (loading == false)">
         <div class="row" ng-show="topicCoverages">
           <div class="col-md-offset-1 col-md-8">
             <div class="progress">
               <div class="progress-bar" ng-class="topicProgressClass(topic.name)" ng-if="topic.coverage > 0"
                    ng-style="topicCoverageStyle(topic)" ng-repeat="topic in topicCoverages">
-                <span>{{topic.name}}</span>
+                <!--<span class="text-capitalize">{{topic.name}}</span>-->
               </div>
+            </div>
+          </div>
+          <div class="col-md-offset-1 col-md-11">
+            <div>
+              <ul class="list-inline">
+                <li class="topic-name" ng-class="topicColorClass(topic)" ng-if="topic.coverage > 0" ng-repeat="topic in topicCoverages">
+                  {{topic.name}} {{topic.coverage|number:0}}%
+                </li>
+              </ul>
             </div>
           </div>
         </div>
