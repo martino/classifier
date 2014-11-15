@@ -1,40 +1,75 @@
 <div ng-controller="MainCtrl" class="container">
-    <div class="row">
-        <h1>Classify an article</h1>
+  <div class="row">
+    <h1>Classify an article</h1>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <p>Select text file</p>
+      <input type="file" on-read-file="showContent($fileContent)"/>
     </div>
-    <div class="row">
-        <div class="small-4 columns">
-            <p>Select text file</p>
-            <input type="file" on-read-file="showContent($fileContent)" />
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-6">
+          <select style="max-width: 100%;" ng-model="selectedModel"
+                  ng-options="model.id as model.desc for model in models"></select><br>
         </div>
-        <div class="small-8 columns">
-            <div class="row">
-                <div class="small-6 columns">
-                    <select ng-model="selectedModel" ng-options="model.id as model.desc for model in models"></select><br>
-                </div>
-                <div class="small-6 columns">
-                    <a ng-if="selectedModel" class="button secondary tiny" ng-href="/#/models/{{selectedModel}}/">show model</a>
-                    <a ng-if="graphData" class="button tiny" ng-click="classifyText()">analyze again</a>
-                </div>
-            </div>
+        <div class="col-md-6">
+          <a ng-if="selectedModel" class="btn btn-default btn-small" ng-href="/#/models/{{selectedModel}}/">show
+            model</a>
+          <a ng-if="analyzedText" class="btn btn-primary btn-small" ng-click="startClassifyTexts()">analyze again</a>
         </div>
+      </div>
+    </div>
 
+  </div>
+
+  <div ng-show="loading" class="animaton-fadeanimaton-fade loader text-center" title="7" style="height: 100%; width: 100%;">
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+           width="24px" height="30px" viewBox="0 0 24 30" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+          <rect x="0" y="10" width="4" height="10" fill="#333" opacity="0.2">
+            <animate attributeName="opacity" attributeType="XML" values="0.2; 1; .2" begin="0s" dur="0.6s" repeatCount="indefinite" />
+            <animate attributeName="height" attributeType="XML" values="10; 20; 10" begin="0s" dur="0.6s" repeatCount="indefinite" />
+            <animate attributeName="y" attributeType="XML" values="10; 5; 10" begin="0s" dur="0.6s" repeatCount="indefinite" />
+          </rect>
+          <rect x="8" y="10" width="4" height="10" fill="#333"  opacity="0.2">
+            <animate attributeName="opacity" attributeType="XML" values="0.2; 1; .2" begin="0.15s" dur="0.6s" repeatCount="indefinite" />
+            <animate attributeName="height" attributeType="XML" values="10; 20; 10" begin="0.15s" dur="0.6s" repeatCount="indefinite" />
+            <animate attributeName="y" attributeType="XML" values="10; 5; 10" begin="0.15s" dur="0.6s" repeatCount="indefinite" />
+          </rect>
+          <rect x="16" y="10" width="4" height="10" fill="#333"  opacity="0.2">
+            <animate attributeName="opacity" attributeType="XML" values="0.2; 1; .2" begin="0.3s" dur="0.6s" repeatCount="indefinite" />
+            <animate attributeName="height" attributeType="XML" values="10; 20; 10" begin="0.3s" dur="0.6s" repeatCount="indefinite" />
+            <animate attributeName="y" attributeType="XML" values="10; 5; 10" begin="0.3s" dur="0.6s" repeatCount="indefinite" />
+          </rect>
+        </svg>
+  </div>
+
+  <div ng-show="error" class="text-center" style="margin-top:50px">
+    <h4>Sorry something went wrong :(</h4>
+    <iframe src="http://giphy.com/embed/PSyqVLhwDvjXO?html5=true" width="480" height="266" frameBorder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+
+  </div>
+
+  <div ng-if="analyzedText && (loading == false)" style="margin-top: 30px;">
+    <div class="row" ng-show="topicCoverages" >
+      <div class="col-md-offset-2 col-md-8">
+        <div class="progress">
+          <div class="progress-bar" ng-class="topicProgressClass(topic.name)" ng-if="topic.coverage > 0" ng-style="topicCoverageStyle(topic)" ng-repeat="topic in topicCoverages">
+            <span>{{topic.name}}</span>
+          </div>
+        </div>
+      </div>
     </div>
 
 
-    <!--<div class="row">-->
-    <ul class="small-block-grid-2" style="padding:20px;">
-        <li>
-            <div ng-if="fileContent">
-                <pre style="overflow: scroll; height:700px;">{{fileContent}}</pre>
-            </div>
-        </li>
-        <li>
-            <div ng-if="graphData">
-                <canvas radarchart options="options"  data="graphData" width="500" height="500"></canvas>
-            </div>
-        </li>
-    </ul>
-    <!--</div>-->
+    <div class="row" ng-repeat="p in analyzedText">
+      <div class="col-md-offset-2 col-md-8 topic-text" ng-class="topicBorderClass(p.category)">
+        {{p.text}}
+      </div>
+      <div class="col-md-2">
+        <span ng-show="p.category.name" class="topic-name vertical-middle" ng-class="topicColorClass(p.category)"> {{p.category.name}}</span>
+      </div>
+    </div>
 
+  </div>
 </div>

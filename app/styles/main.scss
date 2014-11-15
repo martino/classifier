@@ -2,6 +2,14 @@
 // endbower
 @import "compass/css3/box-shadow";
 
+@mixin vertical-align {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -94,7 +102,42 @@
 
 $colors : #c1ddc7, #d7db7d, #bbcd77, #dfc590, #e4cdbf;
 
+.topic-text {
+  border-right: 5px solid white;
+  font-family: 'Lora', Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: rgba(0,0,0,.75);
+  letter-spacing: .01em;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+  margin-top: 0.5%;
+}
+
+.vertical-middle {
+  @include vertical-align;
+}
+
+.topic-name {
+  font-family: 'Ubuntu', sans-serif;
+  font-variant: small-caps;
+  font-size: 110%;
+}
+
+
 @for $i from 1 through length($colors) {
+  .color-#{$i}-bg {
+    background-color: nth($colors, $i);
+  }
+
+  .color-#{$i}-bg-light {
+    background-color: rgba(nth($colors, $i), 0.2);
+  }
+
+  .color-#{$i}-color {
+    color: nth($colors, $i);
+  }
+
   .color-#{$i} {
     border-color: nth($colors, $i);
 
@@ -137,4 +180,8 @@ $colors : #c1ddc7, #d7db7d, #bbcd77, #dfc590, #e4cdbf;
   svg rect{
     fill: #FF6700;
   }
+}
+
+.progress-bar {
+  color: #777;
 }
