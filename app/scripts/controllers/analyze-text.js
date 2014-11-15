@@ -10,7 +10,8 @@
 angular.module('classifierApp')
   .controller('AnalyzeText', ['$rootScope', '$scope', '$http', '$q', 'datatxt', 'lodash', function ($rootScope, $scope, $http, $q, datatxt, _) {
     $scope.models = [];
-    $scope.defaultModel = 'f83cc491-38e1-4203-bc18-25b076eeeeb4';
+    $scope.selectedModel = 'f83cc491-38e1-4203-bc18-25b076eeeeb4';
+
     $rootScope.page = 'article';
     $scope.loading = false;
     $scope.error = false;
@@ -79,7 +80,7 @@ angular.module('classifierApp')
 
     $scope.classifyTexts = function (texts) {
       var totalLen = 0;
-      $scope.selectedModel = $scope.selectedModel || $scope.defaultModel;
+      $scope.selectedModel = $scope.selectedModel;
       $scope.analyzedText = null;
       $scope.topicCoverages = null;
       $scope.loading = true;
