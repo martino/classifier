@@ -8,7 +8,7 @@
  * Controller of the classifierApp
  */
 angular.module('classifierApp')
-  .controller('MainCtrl', ['$rootScope', '$scope', '$http', '$q', 'datatxt', 'lodash', function ($rootScope, $scope, $http, $q, datatxt, _) {
+  .controller('AnalyzeText', ['$rootScope', '$scope', '$http', '$q', 'datatxt', 'lodash', function ($rootScope, $scope, $http, $q, datatxt, _) {
     $scope.models = [];
     $scope.defaultModel = 'f83cc491-38e1-4203-bc18-25b076eeeeb4';
     $rootScope.page = 'article';
@@ -25,6 +25,9 @@ angular.module('classifierApp')
       return _.map($scope.getCurrentModel().data.categories, function (category) {
         return category.name
       })
+    };
+    $scope.uploadClick = function () {
+      angular.element('#fileUpload').trigger('click');
     };
 
     $scope.topicCoverageStyle = function (topic) {
