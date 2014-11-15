@@ -19,7 +19,7 @@ angular.module('classifierApp')
       return 'color-' + (index + 1);
     };
     $scope.generateEntityColor = function (topic) {
-      return 'color-weight-' + topic.weight;
+      return 'color-weight-' + Math.floor(topic.weight);
     };
     $scope.generateBGImage = function (topic) {
       var data = datatxt.getTopic(topic.wikipage, 'it');
