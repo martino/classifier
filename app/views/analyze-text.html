@@ -31,15 +31,11 @@
                     ng-change="startClassifyTexts()"
                     ng-options="model.id as model.desc for model in models"></select><br>
 
-            <a ng-if="selectedModel" class="btn btn-default btn-block" ng-href="/#/models/{{selectedModel}}/" style="margin-top:10px;">show
+            <a ng-show="models.length && selectedModel" class="btn btn-default btn-block" ng-href="/#/models/{{selectedModel}}/" style="margin-top:10px;">show
               model</a>
           </div>
         </div>
       </div>
-      <!--<div class="row">-->
-        <!---->
-        <!--<a ng-if="analyzedText" class="btn btn-primary btn-small" ng-click="startClassifyTexts()">analyze again</a>-->
-      <!--</div>-->
     </div>
 
     <div class="col-md-9">
