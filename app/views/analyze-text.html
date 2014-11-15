@@ -13,8 +13,8 @@
 
             <input id="fileUpload" type="file" on-read-file="showContent($fileContent)" style="display: none"/>
             <a ng-click="uploadClick()" class="btn btn-primary btn-block">Upload your article</a>
-            <a ng-click="uploadClick()" class="btn btn-default btn-block">Try example A</a>
-            <a ng-click="uploadClick()" class="btn btn-default btn-block">Try example B</a>
+            <a ng-click="loadExample(1)" class="btn btn-default btn-block">Try example A</a>
+            <a ng-click="loadExample(2)" class="btn btn-default btn-block">Try example B</a>
             <p></p>
           </div>
         </div>
@@ -31,7 +31,7 @@
                     ng-change="startClassifyTexts()"
                     ng-options="model.id as model.desc for model in models"></select><br>
 
-            <a ng-if="selectedModel" class="btn btn-default btn-small" ng-href="/#/models/{{selectedModel}}/">show
+            <a ng-if="selectedModel" class="btn btn-default btn-block" ng-href="/#/models/{{selectedModel}}/" style="margin-top:10px;">show
               model</a>
           </div>
         </div>

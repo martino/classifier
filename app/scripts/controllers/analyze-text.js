@@ -137,7 +137,21 @@ angular.module('classifierApp')
     };
 
     $scope.startClassifyTexts = function () {
-      $scope.classifyTexts($scope.fileContent.split(/\.\r\n/));
+      var splitted = $scope.fileContent.split(/\.\r\n/);
+
+      if (splitted.length < 2)
+        splitted = $scope.fileContent.split(/\.\n/);
+
+      $scope.classifyTexts(splitted);
+    };
+    $scope.loadExample = function (exampleNumber) {
+      var examples = ['01-04-1994 SS940401001AAA.txt', '03-03-1995 SS950303029BAA.txt']
+        , prefix = '/data/';
+
+      $http.get(prefix + examples[exampleNumber-1]).success(function (data) {
+        $scope.fileContent = data;
+        $scope.startClassifyTexts();
+      });
     };
 
     $scope.showContent = function($fileContent){
