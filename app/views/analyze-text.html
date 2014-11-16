@@ -57,6 +57,11 @@
       </div>
 
       <div class="animation-fade" ng-if="analyzedText && (loading == false)">
+        <div class="row">
+          <div class="col-md-12">
+            <h3>{{fileName}}</h3>
+          </div>
+        </div>
         <div class="row" ng-show="topicCoverages">
           <div class="col-md-offset-1 col-md-8">
             <div class="progress">
@@ -76,7 +81,6 @@
             </div>
           </div>
         </div>
-
 
         <div class="row" ng-repeat="p in analyzedText">
           <div class="col-md-offset-1 col-md-8 topic-text" ng-class="topicBorderClass(p.category)">
