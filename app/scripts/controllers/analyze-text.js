@@ -11,6 +11,7 @@ angular.module('classifierApp')
   .controller('AnalyzeText', ['$rootScope', '$scope', '$http', '$q', 'datatxt', 'lodash', function ($rootScope, $scope, $http, $q, datatxt, _) {
     $scope.models = [];
     $scope.selectedModel = 'f83cc491-38e1-4203-bc18-25b076eeeeb4';
+    $scope.selectedModel = '7b435adc-a363-4dda-aa90-677b921cb165';
 
     $rootScope.page = 'article';
     $scope.loading = false;
