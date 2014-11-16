@@ -56,14 +56,14 @@
                 webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
       </div>
 
-      <div class="animation-fade" ng-if="analyzedText && (loading == false)">
+      <div class="animation-fade" ng-if="analyzedText && (loading == false)" style="margin-left:5%">
         <div class="row">
           <div class="col-md-12">
             <h3>{{fileName}}</h3>
           </div>
         </div>
         <div class="row" ng-show="topicCoverages">
-          <div class="col-md-offset-1 col-md-8">
+          <div class="col-md-8">
             <div class="progress">
               <div class="progress-bar" ng-class="topicProgressClass(topic.name)" ng-if="topic.coverage > 0"
                    ng-style="topicCoverageStyle(topic)" ng-repeat="topic in topicCoverages">
@@ -71,7 +71,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-offset-1 col-md-11">
+          <div class="col-md-12">
             <div>
               <ul class="list-inline">
                 <li class="topic-name" ng-class="topicColorClass(topic)" ng-if="topic.coverage > 0" ng-repeat="topic in topicCoverages">
@@ -83,8 +83,8 @@
         </div>
 
         <div class="row" ng-repeat="p in analyzedText">
-          <div class="col-md-offset-1 col-md-8 topic-text" ng-class="topicBorderClass(p.category)">
-            {{p.text}}
+          <div class="col-md-8 topic-text" ng-class="topicBorderClass(p.category)"
+            ng-bind-html="p.text">
           </div>
           <div class="col-md-2">
             <span ng-show="p.category.name" class="topic-name vertical-middle" ng-class="topicColorClass(p.category)"> {{p.category.name}}</span>

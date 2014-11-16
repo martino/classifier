@@ -102,7 +102,8 @@ angular.module('classifierApp')
       $q.all(responses).then(function (responses) {
         $scope.analyzedText = _.map(responses, function (data) {
           var threshold = 0.20
-            , category = _.sortBy(data.response.categories, 'score').reverse()[0] || {};
+            , category = _.sortBy(data.response.categories, 'score').reverse()[0] || {}
+            , cleanedText = data.text.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/[\n]+/g, '<br>');
 
           if ('score' in category){
             category = (category.score > threshold) ? category : {};
@@ -112,7 +113,7 @@ angular.module('classifierApp')
           }
 
           return {
-            text: data.text,
+            text: cleanedText,
             category: category
           }
         });
