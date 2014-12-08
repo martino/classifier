@@ -195,6 +195,8 @@ angular.module('classifierApp')
 
     var addEntityToCategory = function (categoryName, items) {
       var category = getCategoryByName(categoryName);
+      if (!_.isArray(category.topics))
+        category.topics = [];
       _.each(items, function(item) {
         category.topics.push({
           'wikipage': item.uri,

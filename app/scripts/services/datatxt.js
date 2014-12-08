@@ -47,7 +47,7 @@ angular.module('classifierApp')
       var postData = {
         'text': text,
         'model': model,
-        //'include': 'score_details',
+        'include': 'score_details',
         'nex.min_length': 3
         };
       postData = addAuth(postData);

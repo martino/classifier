@@ -60,7 +60,7 @@ angular.module('classifierApp')
           var modalInstance = $modal.open({
             templateUrl: 'views/modal-topicentity.html',
             controller: 'EntitymodaldetailsCtrl',
-            size: 'lg',
+            //size: 'lg',
             resolve: {
               entity: function () {
                 return scope.entityData;
