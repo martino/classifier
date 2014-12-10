@@ -24,7 +24,13 @@ angular.module('classifierApp')
       }
     };
 
-    var queryDataTXT = function (request) {
+    var gerente = {
+      urls: {
+        models: '/models/'
+      }
+    };
+
+    var httpRequest = function (request) {
       var deferred = $q.defer();
       $http(request)
         .success(function (data) {
@@ -57,45 +63,46 @@ angular.module('classifierApp')
         data: $.param(postData),
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       };
-      return queryDataTXT(request);
+      return httpRequest(request);
     };
 
     var getModel = function (modelId) {
-      var params = {
-        'id': modelId
-      };
-
       var request = {
         method: 'GET',
-        url: dataTXT.urls.models,
-        params: addAuth(params)
+        url: gerente.urls.models + modelId + '/'
       };
-      return queryDataTXT(request);
+      return httpRequest(request);
     };
 
     var updateModel = function (modelId, data) {
       var postData = {
-        'id': modelId,
         'data': JSON.stringify(data)
       };
-      postData = addAuth(postData);
+
       var request = {
         method: 'PUT',
-        url: dataTXT.urls.models,
+        url: gerente.urls.models + modelId + '/',
         data: $.param(postData),
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 
       };
-      return queryDataTXT(request);
+      return httpRequest(request);
+    };
+
+    var testModel = function (modelId) {
+      var request = {
+        method: 'GET',
+        url: gerente.urls.models + modelId + '/test/'
+      };
+      return httpRequest(request);
     };
 
     var getAllModels = function () {
       var request = {
         method: 'GET',
-        url: dataTXT.urls.models,
-        params: addAuth()
+        url: gerente.urls.models
       };
-      return queryDataTXT(request);
+      return httpRequest(request);
     };
 
     var getTopicDetails = function (topic, lang) {
@@ -109,7 +116,7 @@ angular.module('classifierApp')
         url: dataTXT.urls.topics,
         params: params
       };
-      return queryDataTXT(request);
+      return httpRequest(request);
     };
 
     var cleanTopic = function (data) {
@@ -149,7 +156,7 @@ angular.module('classifierApp')
         url: dataTXT.urls.wikisearch,
         params: query
       };
-      return queryDataTXT(request);
+      return httpRequest(request);
     };
 
     var getRel = function (topic) {
@@ -164,7 +171,7 @@ angular.module('classifierApp')
         url: dataTXT.urls.rel,
         params: query
       };
-      return queryDataTXT(request);
+      return httpRequest(request);
     };
 
     return {
@@ -172,6 +179,7 @@ angular.module('classifierApp')
       'getAllModels': getAllModels,
       'getModel': getModel,
       'updateModel': updateModel,
+      'testModel': testModel,
       //'getTopicDetails': getTopicDetails,
       'getTopic': getTopic,
       'wikiSearch': wikiSearch,

@@ -85,7 +85,12 @@ module.exports = function (grunt) {
         host: 'api.dandelion.eu', // wherever the data service is running
 //        port: 443, // the port that the data service is running on
         https: true
-      }
+      },
+      {
+        context: '/models', // the context of the data service
+        host: 'localhost', // wherever the data service is running
+        port: 8000 // the port that the data service is running on
+        }
       ],
       livereload: {
         options: {

@@ -2,13 +2,15 @@
     <spinner ng-show="model == null"></spinner>
     <div ng-show="model !== null" class="animaton-fade">
         <div class="row">
-            <h1>{{model.description}} <small>{{model.id}}</small></h1>
+            <h1>{{model.name}} <small>{{model.description}}</small></h1>
         </div>
         <div class="row">
           <div class="btn-group pull-right">
             <a ng-hide="editMode" ng-click="enterEditMode()" class="btn btn-sm btn-default" >edit</a>
             <a ng-show="editMode" ng-click="handlingSave()" class="btn btn-sm btn-danger" >save</a>
             <a ng-show="editMode" ng-click="handlingCancel()" class="btn btn-sm btn-default" >cancel</a>
+            <a ng-hide="editMode" ng-click="testModel()" class="btn btn-sm btn-default" >test it</a>
+            <a ng-hide="editMode" ng-href="/#/models/{{model.id}}/tests" class="btn btn-sm btn-default" >test results</a>
           </div>
         </div>
         <div class="column-container-wrapper">
