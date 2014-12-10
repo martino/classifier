@@ -7,7 +7,7 @@
 
     <div ng-if="models">
         <div class="row" ng-repeat="model in models">
-            <h3 style="font-variant: small-caps;"><a ng-href="/#/models/{{model.id}}">{{model.name}}</a></h3>
+            <h3 style="font-variant: small-caps;"><a ng-href="/#/models/{{model.id}}">{{model.name}}</a> <small>{{model.description}}</small></h3>
 
             <ul class="inline-list">
                 <li ng-repeat="topic in model.topics">

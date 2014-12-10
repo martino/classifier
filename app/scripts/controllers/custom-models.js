@@ -40,6 +40,7 @@ angular.module('classifierApp')
       var datatxtModel = $scope.dtModel
         , model = {
           id: datatxtModel.id,
+          name: datatxtModel.name,
           description: datatxtModel.description || "",
           categories: []
         };
@@ -84,8 +85,9 @@ angular.module('classifierApp')
     };
 
     datatxt.getModel($routeParams.modelId).then(function (data) {
-      $scope.dtModel = data.data;
-      $scope.model = loadModel($scope.originalModel);
+      $scope.dtModel = data.data || {};
+      $scope.dtModel.name = data.name;
+      $scope.model = loadModel();
     });
 
     $scope.formatWikipage = function (wikipage) {
@@ -115,6 +117,10 @@ angular.module('classifierApp')
     $scope.handlingSave = function () {
       serializeModel();
       disableEditMode();
+    };
+
+    $scope.testModel = function () {
+      datatxt.testModel($routeParams.modelId);
     };
 
     $scope.deleteTopic = function (categoryName) {

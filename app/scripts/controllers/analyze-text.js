@@ -166,13 +166,13 @@ angular.module('classifierApp')
     };
 
     datatxt.getAllModels().then(function (data) {
-      var items = data.items, models = [];
-
+      var items = data, models = [];
       for(var i=items.length-1; i>=0; i--) {
         models.push(
           {
             'id': items[i].id,
             'desc': items[i].data.description,
+            'name': items[i].name,
             'data': items[i].data,
             'labels': items[i].data.categories.map(function (el) {return el.name})
           });
