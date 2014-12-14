@@ -26,7 +26,16 @@ angular.module('classifierApp')
 
     var gerente = {
       urls: {
-        models: '/models/'
+        models: '/models/',
+        model: function (modelId) {
+          return '/models/' + modelId + '/';
+        },
+        modelTest: function (modelId) {
+          return '/models/' + modelId + '/test/';
+        },
+        modelTestResults: function (modelId) {
+          return '/models/' + modelId + '/results/';
+        }
       }
     };
 
@@ -92,7 +101,15 @@ angular.module('classifierApp')
     var testModel = function (modelId) {
       var request = {
         method: 'GET',
-        url: gerente.urls.models + modelId + '/test/'
+        url: gerente.urls.modelTest(modelId)
+      };
+      return httpRequest(request);
+    };
+
+    var getAllTestResults = function (modelId) {
+      var request = {
+        method: 'GET',
+        url: gerente.urls.modelTestResults(modelId)
       };
       return httpRequest(request);
     };
@@ -180,6 +197,7 @@ angular.module('classifierApp')
       'getModel': getModel,
       'updateModel': updateModel,
       'testModel': testModel,
+      'getAllTestResults': getAllTestResults,
       //'getTopicDetails': getTopicDetails,
       'getTopic': getTopic,
       'wikiSearch': wikiSearch,

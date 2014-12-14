@@ -87,6 +87,7 @@ angular.module('classifierApp')
     datatxt.getModel($routeParams.modelId).then(function (data) {
       $scope.dtModel = data.data || {};
       $scope.dtModel.name = data.name;
+      $scope.dtModel.id = data.id;
       $scope.model = loadModel();
     });
 

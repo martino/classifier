@@ -17,7 +17,8 @@ angular
     'ngSanitize',
     'ngTouch',
 //    'chartjs-directive',
-    'angles',
+//    'angles',
+    'angularChart',
     'ngLodash',
     'LocalStorageModule',
     'ui.bootstrap',
@@ -33,6 +34,10 @@ angular
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
+      })
+      .when('/models/:modelId/evaluations/', {
+        templateUrl: 'views/evaluation.html',
+        controller: 'EvaluationCtrl'
       })
       .when('/models/:modelId/', {
         templateUrl: 'views/models.html',
