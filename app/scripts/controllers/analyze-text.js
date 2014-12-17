@@ -82,7 +82,6 @@ angular.module('classifierApp')
 
     $scope.classifyTexts = function (texts) {
       var totalLen = 0;
-      $scope.selectedModel = $scope.selectedModel;
       $scope.analyzedText = null;
       $scope.topicCoverages = null;
       $scope.loading = true;
@@ -103,7 +102,7 @@ angular.module('classifierApp')
 
       $q.all(responses).then(function (responses) {
         $scope.analyzedText = _.map(responses, function (data) {
-          var threshold = 0.20
+          var threshold = 0.3
             , category = _.sortBy(data.response.categories, 'score').reverse()[0] || {}
             , cleanedText = data.text.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/[\n]+/g, '<br>');
 
