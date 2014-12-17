@@ -11,14 +11,39 @@ angular.module('classifierApp')
   .controller('EvaluationCtrl', ['$scope', '$location', '$routeParams', 'datatxt', 'lodash', function ($scope, $location, $routeParams, datatxt, _) {
     $scope.results = [];
     $scope.showCharts = false;
+    $scope.currentModelId = $routeParams.modelId;
 
-    var onChartClick = function (point) {
+    $scope.onChartClick = function (point) {
       var selectedIdx = point.x
-        , selectedData = {};
+        , selectedData = {}
+        , isCurrent;
       selectedData.micro = $scope.graph.microChart[selectedIdx];
       selectedData.macro = $scope.graph.macroChart[selectedIdx];
-      $scope.currentSelection = _.cloneDeep(selectedData);
-      console.log('click', selectedIdx);
+      selectedData.selectedId = selectedData.micro.label;
+      selectedData.isCurrentModel = _.isEqual(
+        $scope.graph.rawModels[selectedData.selectedId].categories,
+        $scope.dtModel.categories
+      );
+
+      $scope.currentSelection = selectedData;
+      $scope.$apply();
+    };
+
+    $scope.restoreModel = function () {
+
+      var modelToRestore = $scope.graph.rawModels[$scope.currentSelection.selectedId];
+      $scope.restoredModel = false;
+      $scope.restoredModelFailed = false;
+      $scope.restoreInProgress = true;
+
+      datatxt.updateModel($scope.currentModelId, modelToRestore).then(function() {
+        $scope.restoredModel = true;
+        $scope.restoreInProgress = false;
+        $scope.currentSelection.isCurrentModel = true;
+      }, function () {
+        $scope.restoredModelFailed = true;
+        $scope.restoreInProgress = false;
+      });
     };
 
     $scope.graph = {
@@ -35,6 +60,13 @@ angular.module('classifierApp')
         }],
         xAxis: {
           key: 'label'
+          //padding: {
+          //  left: 0,
+          //  right: 0
+          //}
+        },
+        legend: {
+          show: false
         },
         regions: {
           'precision': [{'style':'dashed'}],
@@ -43,17 +75,17 @@ angular.module('classifierApp')
         selection: {
           enabled: true,
           grouped: true,
-          multiple: false,
-          onselected: function (d, element) {
-            console.log('selected',d, element);
-          }
+          multiple: false
         },
-        onclick: onChartClick
+        zoom: {
+          enabled: false
+        },
+        onclick: $scope.onChartClick
       }
     };
 
     function generateChartData (results) {
-      var micro = [], macro = []
+      var micro = [], macro = [], rawModels = {}
         , floatPrecision = 3;
 
       _.each(results, function (data) {
@@ -70,9 +102,12 @@ angular.module('classifierApp')
           'recall': data.results.macro.recall.toFixed(floatPrecision),
           'precision': data.results.macro.precision.toFixed(floatPrecision)
         });
+
+        rawModels[data.id] = data.json;
       });
       $scope.graph.microChart = micro;
       $scope.graph.macroChart = macro;
+      $scope.graph.rawModels = rawModels;
       $scope.showCharts = true;
     }
 
@@ -80,7 +115,14 @@ angular.module('classifierApp')
     datatxt.getAllTestResults($routeParams.modelId).then(function (data) {
       $scope.results = data;
       generateChartData(data);
-    })
+    });
+
+    datatxt.getModel($routeParams.modelId).then(function (data) {
+      $scope.dtModel = data.data || {};
+      $scope.dtModel.name = data.name;
+      $scope.dtModel.id = data.id;
+      $scope.dtModel.task = data.testing_task;
+    });
 
 
   }]);

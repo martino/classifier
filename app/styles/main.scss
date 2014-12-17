@@ -187,3 +187,25 @@ $colors : #c1ddc7, #d7db7d, #bbcd77, #dfc590, #e4cdbf, #F08278, #CAE8D1, #819D97
   color: #777;
 }
 
+.evaluation-container {
+  margin-top: 2.5%;
+}
+
+.evaluation-widget {
+  font-size: 1.8rem;
+  .evaluation-header {
+    font-variant: small-caps;
+  }
+
+  .evaluation-values {
+    font-size: 2rem;
+    font-weight: bold;
+    color: lighten(#333, 30%);
+    vertical-align: baseline;
+    line-height: 1.6;
+    .important {
+      color: #333;
+      font-size: 2.5rem;
+    }
+  }
+}

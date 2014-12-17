@@ -87,6 +87,11 @@ module.exports = function (grunt) {
         https: true
       },
       {
+        context: '/tasks', // the context of the data service
+        host: 'localhost', // wherever the data service is running
+        port: 8000 // the port that the data service is running on
+      },
+      {
         context: '/models', // the context of the data service
         host: 'localhost', // wherever the data service is running
         port: 8000 // the port that the data service is running on

@@ -35,6 +35,9 @@ angular.module('classifierApp')
         },
         modelTestResults: function (modelId) {
           return '/models/' + modelId + '/results/';
+        },
+        modelTestStatus: function (taskId) {
+          return '/tasks/' + taskId + '/status';
         }
       }
     };
@@ -102,6 +105,14 @@ angular.module('classifierApp')
       var request = {
         method: 'GET',
         url: gerente.urls.modelTest(modelId)
+      };
+      return httpRequest(request);
+    };
+
+    var testingStatus = function (taskId) {
+      var request = {
+        method: 'GET',
+        url: gerente.urls.modelTestStatus(taskId)
       };
       return httpRequest(request);
     };
@@ -197,6 +208,7 @@ angular.module('classifierApp')
       'getModel': getModel,
       'updateModel': updateModel,
       'testModel': testModel,
+      'testingStatus': testingStatus,
       'getAllTestResults': getAllTestResults,
       //'getTopicDetails': getTopicDetails,
       'getTopic': getTopic,

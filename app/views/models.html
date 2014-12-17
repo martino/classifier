@@ -9,7 +9,8 @@
             <a ng-hide="editMode" ng-click="enterEditMode()" class="btn btn-sm btn-default" >edit</a>
             <a ng-show="editMode" ng-click="handlingSave()" class="btn btn-sm btn-danger" >save</a>
             <a ng-show="editMode" ng-click="handlingCancel()" class="btn btn-sm btn-default" >cancel</a>
-            <a ng-hide="editMode" ng-click="testModel()" class="btn btn-sm btn-default" >test it</a>
+            <a ng-hide="editMode || dtModel.task" ng-click="testModel()" class="btn btn-sm btn-default" >test it</a>
+            <a ng-show="dtModel.task !== null" class="btn btn-sm btn-default disabled" >testing ...</a>
             <a ng-hide="editMode" ng-href="/#/models/{{model.id}}/evaluations/" class="btn btn-sm btn-default" >test results</a>
           </div>
         </div>

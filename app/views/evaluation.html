@@ -1,48 +1,68 @@
 <div class="container-fluid">
-
-
-  <div class="row" ng-if="showCharts">
-    <div class="col-md-6">
-      <h3>Micro-analysis</h3>
-      <angularchart
-        dataset="graph.microChart"
-        options="graph.options">
-      </angularchart>
-      <!--<canvas class="pull-right" linechart options="graph.options" data="graph.microChart" width="500" height="300"></canvas>-->
+  <spinner ng-show="(showCharts == undefined)  || (dtModel == undefined)"></spinner>
+  <div ng-show="(showCharts !== undefined)  || (dtModel == undefined)" class="animaton-fade">
+    <div ng-show="restoredModel" class="alert alert-success text-center" role="alert">
+      <strong>Model has been restored!</strong> <a ng-href="/#/models/{{currentModelId}}">Go back</a> and re-edit it
     </div>
-    <div class="col-md-6">
-      <h3>Macro-analysis</h3>
-      <angularchart
-        dataset="graph.macroChart"
-        options="graph.options">
-      </angularchart>
-      <!--<canvas class="pull-left" linechart options="graph.options" data="graph.macroChart" width="500" height="300"></canvas>-->
+    <div ng-show="restoredModelFailed" class="alert alert-success text-center" role="alert">
+      <strong>Oh snap!</strong> Something went wrong, try again later
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6 text-center">
-      <div class="row">
-        <div class="col-md-4">F-Score</div>
-        <div class="col-md-4">Precision</div>
-        <div class="col-md-4">Recall</div>
+    <div ng-show="dtModel.task" class="alert alert-warning text-center" role="alert">
+      <strong>Remember that a test is in progress</strong>
+    </div>
+    <div class="row">
+      <h1><a ng-href="/#/models/{{currentModelId}}">{{dtModel.name}}</a> <small>{{dtModel.description}}</small></h1>
+    </div>
+    <div class="row" ng-if="showCharts">
+      <div class="col-md-6">
+        <div class="text-center">
+          <h3>Macro-analysis</h3>
+        </div>
+        <angularchart
+          dataset="graph.macroChart"
+          options="graph.options">
+        </angularchart>
       </div>
-      <div class="row">
-        <div class="col-md-4">{{currentSelection.micro.fscore}}</div>
-        <div class="col-md-4">{{currentSelection.micro.precision}}</div>
-        <div class="col-md-4">{{currentSelection.micro.recall}}</div>
+      <div class="col-md-6">
+        <div class="text-center">
+          <h3>Micro-analysis</h3>
+        </div>
+        <angularchart
+          dataset="graph.microChart"
+          options="graph.options">
+        </angularchart>
       </div>
     </div>
-    <div class="col-md-6 text-center">
-      <div class="row">
-        <div class="col-md-4">F-Score</div>
-        <div class="col-md-4">Precision</div>
-        <div class="col-md-4">Recall</div>
+    <div ng-if="currentSelection">
+      <div class="row text-center">
+        <h2><small>version:</small> {{currentSelection.selectedId}}</h2>
+        <a ng-hide="currentSelection.isCurrentModel" class="btn btn-default btn-small" ng-class="{disabled: restoreInProgress}" ng-click="restoreModel()">restore this model</a>
       </div>
-      <div class="row">
-        <div class="col-md-4">{{currentSelection.macro.fscore}}</div>
-        <div class="col-md-4">{{currentSelection.macro.precision}}</div>
-        <div class="col-md-4">{{currentSelection.macro.recall}}</div>
+      <div class="row evaluation-container">
+        <div class="col-md-6 text-center evaluation-widget">
+          <div class="row evaluation-header">
+            <div class="col-md-4">Recall</div>
+            <div class="col-md-4">Precision</div>
+            <div class="col-md-4">F-Score</div>
+          </div>
+          <div class="row evaluation-values">
+            <div class="col-md-4">{{currentSelection.macro.precision}}</div>
+            <div class="col-md-4">{{currentSelection.macro.recall}}</div>
+            <div class="col-md-4 important">{{currentSelection.macro.fscore}}</div>
+          </div>
+        </div>
+        <div class="col-md-6 text-center evaluation-widget">
+          <div class="row evaluation-header">
+            <div class="col-md-4">F-Score</div>
+            <div class="col-md-4">Precision</div>
+            <div class="col-md-4">Recall</div>
+          </div>
+          <div class="row evaluation-values">
+            <div class="col-md-4 important">{{currentSelection.micro.fscore}}</div>
+            <div class="col-md-4">{{currentSelection.micro.recall}}</div>
+            <div class="col-md-4">{{currentSelection.micro.precision}}</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
