@@ -8,7 +8,7 @@
  * Controller of the classifierApp
  */
 angular.module('classifierApp')
-  .controller('CustomModelsCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'datatxt', 'lodash', '$modal', function ($rootScope, $scope, $location, $routeParams, datatxt, _, $modal) {
+  .controller('CustomModelsCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'datatxt', 'lodash', '$modal', '$timeout', function ($rootScope, $scope, $location, $routeParams, datatxt, _, $modal, $timeout) {
     $scope.model = null;
     $scope.modelo = null;
     $rootScope.page = 'models';
@@ -49,7 +49,7 @@ angular.module('classifierApp')
         var newCategory = {
           name: category.name || ""
         };
-        newCategory.topics = _.map(category.topics, function(el, key){ return {
+        newCategory.topics = _.map(category.topics, function(el, key){return {
           'wikipage': key,
           'weight': Number((el).toFixed(1)),
           'name': $scope.formatWikipage(key)
@@ -88,7 +88,10 @@ angular.module('classifierApp')
       $scope.dtModel = data.data || {};
       $scope.dtModel.name = data.name;
       $scope.dtModel.id = data.id;
+      $scope.dtModel.task = data.testing_task;
       $scope.model = loadModel();
+      if ($scope.dtModel.task !== null)
+        $scope.checkStatus()
     });
 
     $scope.formatWikipage = function (wikipage) {
@@ -120,8 +123,21 @@ angular.module('classifierApp')
       disableEditMode();
     };
 
+    $scope.checkStatus = function () {
+      datatxt.testingStatus($scope.dtModel.task).then(function (data) {
+        if (data.task.result == null) {
+          $timeout($scope.checkStatus, 5000);
+        } else {
+          $scope.dtModel.task = null;
+        }
+      })
+    };
+
     $scope.testModel = function () {
-      datatxt.testModel($routeParams.modelId);
+      datatxt.testModel($routeParams.modelId).then(function (data) {
+        $scope.dtModel.task = data.task;
+        $scope.checkStatus();
+      });
     };
 
     $scope.deleteTopic = function (categoryName) {
