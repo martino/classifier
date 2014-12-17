@@ -89,21 +89,23 @@ angular.module('classifierApp')
         , floatPrecision = 3;
 
       _.each(results, function (data) {
-        micro.push({
-          'label': data.id,
-          'fscore': data.results.micro.fscore.toFixed(floatPrecision),
-          'recall': data.results.micro.recall.toFixed(floatPrecision),
-          'precision': data.results.micro.precision.toFixed(floatPrecision)
-        });
+        if (data.results.micro.fscore !== null) {
+          micro.push({
+            'label': data.id,
+            'fscore': data.results.micro.fscore.toFixed(floatPrecision),
+            'recall': data.results.micro.recall.toFixed(floatPrecision),
+            'precision': data.results.micro.precision.toFixed(floatPrecision)
+          });
 
-        macro.push({
-          'label': data.id,
-          'fscore': data.results.macro.fscore.toFixed(floatPrecision),
-          'recall': data.results.macro.recall.toFixed(floatPrecision),
-          'precision': data.results.macro.precision.toFixed(floatPrecision)
-        });
+          macro.push({
+            'label': data.id,
+            'fscore': data.results.macro.fscore.toFixed(floatPrecision),
+            'recall': data.results.macro.recall.toFixed(floatPrecision),
+            'precision': data.results.macro.precision.toFixed(floatPrecision)
+          });
 
-        rawModels[data.id] = data.json;
+          rawModels[data.id] = data.json;
+        }
       });
       $scope.graph.microChart = micro;
       $scope.graph.macroChart = macro;
