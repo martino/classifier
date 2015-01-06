@@ -8,7 +8,7 @@
  * Controller of the classifierApp
  */
 angular.module('classifierApp')
-  .controller('AnalyzeText', ['$rootScope', '$scope', '$http', '$q', 'datatxt', 'lodash', function ($rootScope, $scope, $http, $q, datatxt, _) {
+  .controller('AnalyzeText', ['$rootScope', '$scope', '$http', '$q', 'datatxt', 'lodash', '$modal', function ($rootScope, $scope, $http, $q, datatxt, _, $modal) {
     $scope.models = [];
     $scope.selectedModel = 'f83cc491-38e1-4203-bc18-25b076eeeeb4';
     $scope.selectedModel = '7b435adc-a363-4dda-aa90-677b921cb165';
@@ -137,6 +137,24 @@ angular.module('classifierApp')
 
         }
       );
+    };
+    $scope.showScoreDetails = function (topic, scoreDetails) {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/modal-scoredetails.html',
+        controller: 'ScoredetailsmodalCtrl',
+        //size: 'lg',
+        resolve: {
+          topic: function () {
+            return topic
+          },
+          scoreDetails: function () {
+            return scoreDetails
+          },
+          currentModel: function () {
+            return $scope.selectedModel;
+          }
+        }
+      });
     };
 
     $scope.startClassifyTexts = function () {
