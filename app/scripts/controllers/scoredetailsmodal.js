@@ -2,24 +2,20 @@
 
 /**
  * @ngdoc function
- * @name classifierApp.controller:EntitymodaldetailsCtrl
+ * @name classifierApp.controller:ScoredetailsmodalCtrl
  * @description
- * # EntitymodaldetailsCtrl
+ * # ScoredetailsmodalCtrl
  * Controller of the classifierApp
  */
 angular.module('classifierApp')
-  .controller('EntitymodaldetailsCtrl', function ($scope, $modalInstance, entity) {
+  .controller('ScoredetailsmodalCtrl', function ($scope, $modalInstance, topic, scoreDetails, currentModel) {
+    $scope.topic = topic;
+    $scope.scoreDetails = scoreDetails;
+    $scope.currentModel = currentModel;
     $scope.getTopicName = function (etopic) {
       var result = etopic.split('/');
       result = result[result.length-1];
       return decodeURIComponent(result).replace(/_/g, ' ');
-
-    };
-
-    $scope.entity = entity;
-
-    $scope.ok = function () {
-      $modalInstance.close({});
     };
 
     $scope.cancel = function () {

@@ -87,7 +87,13 @@
             ng-bind-html="p.text">
           </div>
           <div class="col-md-2">
-            <span ng-show="p.category.name" class="topic-name vertical-middle" ng-class="topicColorClass(p.category)"> {{p.category.name}}</span>
+            <div ng-show="p.category.name">
+              <span  class="topic-name vertical-middle" ng-class="topicColorClass(p.category)"> {{p.category.name}}
+              <a style="cursor: pointer;" ng-class="topicColorClass(p.category)" ng-click="showScoreDetails(p.category.name, p.category.scoreDetails)">
+                <span class="glyphicon glyphicon-eye-open"></span>
+              </a>
+              </span>
+            </div>
           </div>
         </div>
 
