@@ -24,7 +24,7 @@ angular.module('classifierApp')
         $scope.graph.rawModels[selectedData.selectedId].categories,
         $scope.dtModel.categories
       );
-
+      selectedData.confusionMatrix = $scope.graph.confusionMatrix[selectedIdx];
       $scope.currentSelection = selectedData;
       $scope.$apply();
     };
@@ -85,7 +85,7 @@ angular.module('classifierApp')
     };
 
     function generateChartData (results) {
-      var micro = [], macro = [], rawModels = {}
+      var micro = [], macro = [], confusionMatrix = [], rawModels = {}
         , floatPrecision = 3;
 
       _.each(results, function (data) {
@@ -105,10 +105,13 @@ angular.module('classifierApp')
           });
 
           rawModels[data.id] = data.json;
+
+          confusionMatrix.push(data.results.cmatrix || {});
         }
       });
       $scope.graph.microChart = micro;
       $scope.graph.macroChart = macro;
+      $scope.graph.confusionMatrix = confusionMatrix;
       $scope.graph.rawModels = rawModels;
       $scope.showCharts = true;
     }

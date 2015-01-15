@@ -16,7 +16,7 @@
     <div class="row" ng-if="showCharts">
       <div class="col-md-6">
         <div class="text-center">
-          <h3>Macro-analysis</h3>
+          <h3>Macro-analysis <small><a href="http://rushdishams.blogspot.it/2011/08/micro-and-macro-average-of-precision.html" target="_blank">?</a></small></h3>
         </div>
         <angularchart
           dataset="graph.macroChart"
@@ -25,7 +25,7 @@
       </div>
       <div class="col-md-6">
         <div class="text-center">
-          <h3>Micro-analysis</h3>
+          <h3>Micro-analysis <small><a href="http://rushdishams.blogspot.it/2011/08/micro-and-macro-average-of-precision.html" target="_blank">?</a></small></h3>
         </div>
         <angularchart
           dataset="graph.microChart"
@@ -62,6 +62,11 @@
             <div class="col-md-4">{{currentSelection.micro.recall}}</div>
             <div class="col-md-4">{{currentSelection.micro.precision}}</div>
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5">
+          <confusion-matrix matrix="currentSelection.confusionMatrix"></confusion-matrix>
         </div>
       </div>
     </div>
