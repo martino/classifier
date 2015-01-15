@@ -19,6 +19,11 @@ angular.module('classifierApp')
             'id': items[i].id,
             'description': items[i].data.description,
             'name': items[i].name,
+            'lastTest': {
+              f1: items[i]['last_test']['f1'] || '-',
+              precision: items[i]['last_test']['precision'] || '-',
+              recall: items[i]['last_test']['recall'] || '-'
+            },
             'topics': items[i].data.categories.map(function (el) {
               return {
                 name: el.name,

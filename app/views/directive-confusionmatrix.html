@@ -1,0 +1,10 @@
+<table class="table table-hover text-center">
+  <tr>
+    <th></th>
+    <th ng-repeat="topic in topicList">{{topic}}</th>
+  </tr>
+  <tr ng-repeat="topic in topicList">
+    <td>{{topic}}</td>
+    <td ng-repeat="tl in topicList" ng-class="{'font-bold':topic===tl}">{{matrix[topic][tl].count || '-'}}</td>
+  </tr>
+</table>
