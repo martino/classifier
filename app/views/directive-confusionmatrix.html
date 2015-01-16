@@ -5,6 +5,6 @@
   </tr>
   <tr ng-repeat="topic in topicList">
     <td>{{topic}}</td>
-    <td ng-repeat="tl in topicList" ng-class="{'font-bold':topic===tl}">{{matrix[topic][tl].count || '-'}}</td>
+    <td ng-repeat="tl in topicList" ng-class="{'font-bold':(topic===tl||matrix[topic][tl].max), 'color-cta':matrix[topic][tl].max }">{{matrix[topic][tl].count || '-'}}</td>
   </tr>
 </table>

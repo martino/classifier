@@ -15,7 +15,19 @@ angular.module('classifierApp')
         matrix: '='
       },
       link: function postLink(scope, element, attrs) {
-        scope.topicList = Object.keys(scope.matrix);
+        scope.topicList = Object.getOwnPropertyNames(scope.matrix);
+
+        scope.topicList.forEach(function(topicA) {
+          var topicAKeys = Object.getOwnPropertyNames(scope.matrix[topicA]);
+          if (topicAKeys.length) {
+            var maxIndex = topicAKeys[0];
+            topicAKeys.forEach(function (topicB){
+              if (scope.matrix[topicA][topicB].count > scope.matrix[topicA][maxIndex].count)
+                maxIndex = topicB;
+            });
+            scope.matrix[topicA][maxIndex].max = true
+          }
+        })
       }
     };
   });
