@@ -1,10 +1,23 @@
-<table class="table table-hover text-center">
-  <tr>
-    <th></th>
-    <th ng-repeat="topic in topicList">{{topic}}</th>
-  </tr>
-  <tr ng-repeat="topic in topicList">
-    <td>{{topic}}</td>
-    <td ng-repeat="tl in topicList" ng-class="{'font-bold':(topic===tl||matrix[topic][tl].max), 'color-cta':matrix[topic][tl].max }">{{matrix[topic][tl].count || '-'}}</td>
-  </tr>
-</table>
+<div class="row">
+
+  <div class="col-md-6">
+    <table class="table table-hover text-center">
+      <tr>
+        <th></th>
+        <th ng-repeat="topic in topicList">{{topic}}</th>
+      </tr>
+      <tr ng-repeat="topic in topicList">
+        <td>{{topic}}</td>
+        <td ng-repeat="tl in topicList" ng-class="{'font-bold':(topic===tl||matrix[topic][tl].max)}"><a class="cursor-pointer" ng-class="{'color-cta':matrix[topic][tl].max}" ng-click="showRelevantEntities(matrix[topic][tl].entities)">{{matrix[topic][tl].count || '-'}}</a></td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <ul>
+      <li ng-repeat="(entity, count) in relevantEntities">{{entity}} [{{count}}]</li>
+    </ul>
+
+  </div>
+
+</div>
+
