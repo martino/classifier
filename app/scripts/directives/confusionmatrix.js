@@ -42,6 +42,12 @@ angular.module('classifierApp')
           }
         }, true);
 
+        scope.getTopicName = function (etopic) {
+          var result = etopic.split('/');
+          result = result[result.length-1];
+          return decodeURIComponent(result).replace(/_/g, ' ');
+        };
+
         scope.displayValue = function (total, value) {
           var retValue = (value * 100)/total;
           if (retValue < 1)
@@ -50,7 +56,11 @@ angular.module('classifierApp')
         };
 
         scope.showRelevantEntities = function (entities) {
-            scope.relevantEntities = entities;
+            var allEntities = [], keys = Object.getOwnPropertyNames(entities);
+            keys.forEach(function (key) {
+              allEntities.push({'entity': key, 'count': entities[key]})
+            });
+            scope.relevantEntities = allEntities;
           }
         }
     };
