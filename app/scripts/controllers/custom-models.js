@@ -33,7 +33,9 @@ angular.module('classifierApp')
     };
 
     var fixWidth = function (model) {
-      $scope.categoriesStyle.width = ((model.categories.length + 1) * 300 + 300) + 'px';
+      var spaceForNewTopic = 300;
+      spaceForNewTopic = 0;
+      $scope.categoriesStyle.width = ((model.categories.length + 1) * 300 + spaceForNewTopic) + 'px';
     };
 
     var loadModel = function () {
