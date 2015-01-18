@@ -6,7 +6,7 @@
   <div class="col-md-6">
     <table class="table table-hover text-center">
       <tr>
-        <td colspan="12">Test Outcome</td>
+        <td colspan="12" class="font-small-caps">Test Outcome</td>
       </tr>
       <tr>
         <th></th>
@@ -16,10 +16,14 @@
       <tr ng-repeat="topic in topicList">
         <th>{{topic}}</th>
         <td ng-repeat="tl in topicList" ng-class="{'font-bold':(topic===tl)}">
-          <a ng-if="tl !== 'empty' &&  matrix[topic][tl].count " class="cursor-pointer" ng-class="{'color-cta':matrix[topic][tl].max}" ng-click="showRelevantEntities(matrix[topic][tl].entities)">
+          <a ng-if="tl !== 'empty' &&  matrix[topic][tl].count "
+             class="cursor-pointer" ng-class="{'color-cta':matrix[topic][tl].max}"
+             title="{{matrix[topic][tl].count}} frames"
+             ng-click="showRelevantEntities(matrix[topic][tl].entities)">
             {{displayValue(topicCount[topic], matrix[topic][tl].count)}}%
           </a>
-          <span ng-if="tl === 'empty' && matrix[topic][tl].count">
+          <span ng-if="tl === 'empty' && matrix[topic][tl].count"
+                title="{{matrix[topic][tl].count}} frames">
             {{displayValue(topicCount[topic], matrix[topic][tl].count)}}%
           </span>
           <span ng-if="!matrix[topic][tl].count">-</span>
@@ -29,10 +33,14 @@
       </tr>
     </table>
   </div>
-  <div class="col-md-6">
-    <ul>
-      <li ng-repeat="(entity, count) in relevantEntities">{{entity}} [{{count}}]</li>
+  <div class="col-md-6" ng-show="relevantEntities.length" style="padding-left: 20px;">
+    <h4>Most relevant classified entities:</h4>
+    <ul class="list-unstyled">
+      <li ng-repeat="relevantEntity in relevantEntities | orderBy:'count':true" style="margin-bottom: 10px;">
+        <span class="badge" style="min-width: 30px;margin-right: 5px;">{{relevantEntity.count}}</span> <a class="font-small-caps" ng-href="{{relevantEntity.entity}}">{{getTopicName(relevantEntity.entity)}}</a>
+      </li>
     </ul>
+
 
   </div>
 
