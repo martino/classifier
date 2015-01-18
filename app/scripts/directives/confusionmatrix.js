@@ -17,7 +17,6 @@ angular.module('classifierApp')
       link: function postLink(scope, element, attrs) {
         scope.topicList = Object.getOwnPropertyNames(scope.matrix);
         scope.relevantEntities = [];
-        console.log(scope.matrix)
         scope.topicList.forEach(function(topicA) {
           var topicAKeys = Object.getOwnPropertyNames(scope.matrix[topicA]);
           if (topicAKeys.length) {
