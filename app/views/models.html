@@ -9,8 +9,8 @@
             <a ng-hide="editMode" ng-click="enterEditMode()" class="btn btn-sm btn-default" >edit</a>
             <a ng-show="editMode" ng-click="handlingSave()" class="btn btn-sm btn-danger" >save</a>
             <a ng-show="editMode" ng-click="handlingCancel()" class="btn btn-sm btn-default" >cancel</a>
-            <a ng-hide="editMode || dtModel.task" ng-click="testModel()" class="btn btn-sm btn-default" >test it</a>
-            <a ng-show="dtModel.task !== null" class="btn btn-sm btn-default disabled" >testing ...</a>
+            <a ng-hide="editMode || dtModel.task" ng-click="testModel()" class="btn btn-sm btn-primary" >evaluate</a>
+            <a ng-show="dtModel.task !== null" class="btn btn-sm btn-primary disabled" >evaluating ...</a>
             <a ng-hide="editMode" ng-href="/#/models/{{model.id}}/evaluations/" class="btn btn-sm btn-default" >test results</a>
           </div>
         </div>
@@ -22,9 +22,9 @@
                     <div ng-hide="category.edit">
                       <h3 class="font-small-caps display-inline" style="font-variant: small-caps">{{category.name}}</h3>
                       <div class="animation-fade display-inline" ng-show="category.hover">
-                        <a title="Delete topic" class="cursor-pointer color-cta" ng-click="deleteTopic(category.name)" ng-confirm-click="Are you sure you want to delete this topic?"><span class="glyphicon glyphicon-remove"></span></a>
-                        <a title="Edit topic name" class="cursor-pointer" ng-click="editTopic(category)"><span class="glyphicon glyphicon-wrench"></span></a>
-                        <a title="Add similar entities" class="cursor-pointer" ng-click="addTopicRelated(category.name)"><span class="glyphicon glyphicon-link"></span></a>
+                        <!--<a title="Delete topic" class="cursor-pointer color-cta" ng-click="deleteTopic(category.name)" ng-confirm-click="Are you sure you want to delete this topic?"><span class="glyphicon glyphicon-remove"></span></a>-->
+                        <!--<a title="Edit topic name" class="cursor-pointer" ng-click="editTopic(category)"><span class="glyphicon glyphicon-wrench"></span></a>-->
+                        <a title="Add a new entity" class="cursor-pointer" ng-click="openAddEntity(category.name)"><span class="glyphicon glyphicon-plus"></span></a>
                       </div>
                     </div>
                     <div ng-show="category.edit">
