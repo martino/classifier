@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="row">
+    <h1>document group</h1>
+  </div>
+
+  <spinner ng-show="documentGroup == null"></spinner>
+
+  <div class="row" ng-if="documentGroup" style="margin-top:2%;">
+    {{documentGroup|json}}
+
+  </div>
+</div>

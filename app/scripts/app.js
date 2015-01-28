@@ -35,6 +35,10 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
+      .when('/documents/:docId/', {
+        templateUrl: 'views/document-group-detail.html',
+        controller: 'DocumentGroupDetailCtrl'
+      })
       .when('/documents/', {
         templateUrl: 'views/document-group-list.html',
         controller: 'DocumentGroupListCtrl'
