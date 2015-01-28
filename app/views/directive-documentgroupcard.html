@@ -1,0 +1,11 @@
+<div class="col-md-4 well" style="min-height: 200px;">
+  <h3>
+  <a ng-href="/#/documents/{{documentGroup.id}}/">{{documentGroup.name}}</a>
+  </h3>
+
+  <ul class="list-inline">
+    <li><strong>Documents</strong> {{documentGroup.documents_count}}</li>
+    <li ng-show="documentGroup.testing_task_id"><strong>Testing</strong> in progress</li>
+    <li ng-show="!documentGroup.testing_task_id && documentGroup.last_test"><strong>Tested</strong> Yes</li>
+  </ul>
+</div>

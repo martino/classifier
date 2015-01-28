@@ -38,6 +38,13 @@ angular.module('classifierApp')
         },
         modelTestStatus: function (taskId) {
           return '/tasks/' + taskId + '/status';
+        },
+        documentGroups: '/document-group/',
+        documentGroup: function (dgId) {
+          return '/document-group/' + dgId + '/';
+        },
+        documentGroupTest: function (dgId, testId) {
+          return '/document-group/' + dgId + '/test/' + testId + '/';
         }
       }
     };
@@ -202,6 +209,14 @@ angular.module('classifierApp')
       return httpRequest(request);
     };
 
+    var getDocumentGroups = function () {
+      var request = {
+        method: 'GET',
+        url: gerente.urls.documentGroups
+      };
+      return httpRequest(request);
+    };
+
     return {
       'classifier': classifier,
       'getAllModels': getAllModels,
@@ -213,6 +228,7 @@ angular.module('classifierApp')
       //'getTopicDetails': getTopicDetails,
       'getTopic': getTopic,
       'wikiSearch': wikiSearch,
-      'getRel': getRel
+      'getRel': getRel,
+      'getDocumentGroups': getDocumentGroups
     }
   }]);

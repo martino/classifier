@@ -36,6 +36,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
+            <li ng-class="{active:page==='documents'}"><a href="#/documents/">Documents Group</a></li>
             <li ng-class="{active:page==='article'}"><a href="#/">Article Classification</a></li>
             <li ng-class="{active:page==='models'}"><a href="#/models/">Models</a></li>
           </ul>
@@ -110,6 +111,8 @@
         <script src="scripts/controllers/evaluation.js"></script>
         <script src="scripts/controllers/scoredetailsmodal.js"></script>
         <script src="scripts/directives/confusionmatrix.js"></script>
+        <script src="scripts/controllers/document-group-list.js"></script>
+        <script src="scripts/directives/documentgroupcard.js"></script>
         <!-- endbuild -->
 </body>
 </html>
