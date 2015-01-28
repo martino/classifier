@@ -217,6 +217,14 @@ angular.module('classifierApp')
       return httpRequest(request);
     };
 
+    var getDocumentDetails = function (docId) {
+      var request = {
+        method: 'GET',
+        url: gerente.urls.documentGroup(docId)
+      };
+      return httpRequest(request);
+    };
+
     return {
       'classifier': classifier,
       'getAllModels': getAllModels,
@@ -229,6 +237,7 @@ angular.module('classifierApp')
       'getTopic': getTopic,
       'wikiSearch': wikiSearch,
       'getRel': getRel,
-      'getDocumentGroups': getDocumentGroups
+      'getDocumentGroups': getDocumentGroups,
+      'getDocumentDetails': getDocumentDetails
     }
   }]);
