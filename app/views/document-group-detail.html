@@ -1,12 +1,28 @@
 <div class="container">
-  <div class="row">
-    <h1>document group</h1>
-  </div>
 
   <spinner ng-show="documentGroup == null"></spinner>
+  <div ng-if="documentGroup">
+    <div class="row">
+      <h1>{{documentGroup.name}} <small>{{documentGroup.documents_count}}</small></h1>
+    </div>
 
-  <div class="row" ng-if="documentGroup" style="margin-top:2%;">
-    {{documentGroup|json}}
+    <div class="row" style="margin-top:2%;">
 
+      <div class="col-md-9">
+        <ul class="col-3 list-unstyled">
+          <li ng-repeat="doc in documentGroup.document_list"><a>{{doc.file_name}}</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <div class="well">
+          <ul class="list-unstyled">
+            <li><a>Aggiungi documenti</a></li>
+            <li><a ng-hide="documentGroup.testing_task_id" ng-click="launchTest()"  >Launch test</a></li>
+            <li><a ng-show="documentGroup.testing_task_id !== null" >Classifing documents ...</a></li>
+            <li ng-hide="documentGroup.testing_task_id" ng-if="documentGroup.last_test"><a ng-href="/#/documents/{{documentGroup.id}}/test/{{documentGroup.last_test}}/">Visualizza l'ultimo test</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -45,6 +45,9 @@ angular.module('classifierApp')
         },
         documentGroupTest: function (dgId, testId) {
           return '/document-group/' + dgId + '/test/' + testId + '/';
+        },
+        documentGroupTesting: function (dgId, modelId) {
+          return '/document-group/' + dgId + '/run-test/' + modelId + '/';
         }
       }
     };
@@ -112,6 +115,14 @@ angular.module('classifierApp')
       var request = {
         method: 'GET',
         url: gerente.urls.modelTest(modelId)
+      };
+      return httpRequest(request);
+    };
+
+    var testDocumentGroup = function (dgId, modelId) {
+      var request = {
+        method: 'GET',
+        url: gerente.urls.documentGroupTesting(dgId, modelId)
       };
       return httpRequest(request);
     };
@@ -237,6 +248,7 @@ angular.module('classifierApp')
       'getTopic': getTopic,
       'wikiSearch': wikiSearch,
       'getRel': getRel,
+      'testDocumentGroup': testDocumentGroup,
       'getDocumentGroups': getDocumentGroups,
       'getDocumentDetails': getDocumentDetails
     }
