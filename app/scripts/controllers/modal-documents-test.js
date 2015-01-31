@@ -10,9 +10,13 @@
 angular.module('classifierApp')
   .controller('ModalDocumentsTestCtrl', function ($scope, $modalInstance, classifiers) {
     $scope.data = classifiers;
+    $scope.threshold = '0.25';
 
     $scope.ok = function () {
-      $modalInstance.close({'modelId': $scope.selectedModel});
+      $modalInstance.close({
+        'modelId': $scope.selectedModel,
+        'threshold': parseFloat($scope.threshold)
+      });
     };
 
     $scope.cancel = function () {

@@ -48,9 +48,7 @@ angular.module('classifierApp')
         });
 
         testsModal.result.then(function (data) {
-          console.log(data.modelId);
-
-          datatxt.testDocumentGroup($scope.documentGroup.id, data.modelId).then(function (data) {
+          datatxt.testDocumentGroup($scope.documentGroup.id, data.modelId, data.threshold).then(function (data) {
             $scope.documentGroup.testing_task_id = data.task;
             $scope.checkStatus();
           });
