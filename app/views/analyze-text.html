@@ -1,105 +1,131 @@
 <div ng-controller="AnalyzeText" class="container-fluid">
-  <div class="row">
-    <h1>Classify an article</h1>
-  </div>
-  <div class="row" style="margin-top:30px">
-    <div class="col-md-2">
-      <div class="row">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Select the article</h3>
-          </div>
-          <div class="panel-body">
-
-            <input id="fileUpload" type="file" on-read-file="showContent($fileContent)" style="display: none"/>
-            <a ng-click="uploadClick()" class="btn btn-primary btn-block">Upload your article</a>
-            <div class="text-center" style="padding:1%"><span class="font-small-caps">or use</span></div>
-            <a ng-click="loadExample(1)" class="btn btn-default btn-block">Example article A</a>
-            <a ng-click="loadExample(2)" class="btn btn-default btn-block">Example article B</a>
-            <p></p>
-          </div>
-        </div>
-
-      </div>
-      <div class="row">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Select the classification model</h3>
-          </div>
-          <div class="panel-body">
-            <spinner ng-hide="models.length"></spinner>
-            <select ng-show="models.length" style="max-width: 100%;" ng-model="selectedModel"
-                    ng-change="startClassifyTexts()"
-                    ng-options="model.id as model.desc for model in models"></select><br>
-
-            <a ng-show="models.length && selectedModel" class="btn btn-default btn-block" ng-href="/#/models/{{selectedModel}}/" style="margin-top:10px;">
-              Show model
-            </a>
-          </div>
-        </div>
-      </div>
+  <spinner ng-show="loading"></spinner>
+  <div ng-hide="loading" style="margin-bottom: 50px;">
+    <div class="row">
+      <h1 ng-hide="loadedDoc">Classify an article</h1>
+      <h1 ng-show="loadedDoc">
+        <small><a class="cursor-pointer" ng-href="/#/documents/{{documentGroup.id}}/">{{documentGroup.name}}</a></small>
+        / {{fileName}}
+      </h1>
     </div>
-
-    <div class="col-md-9">
-      <div class="lead" style="padding-left:5%;" ng-hide="error || loading || analyzedText">
-        In order to classify a text:
-        <ul style="padding-top:0.8%">
-          <li>upload your article or use an example</li>
-          <li>select the classification model</li>
-          <li>enjoy</li>
-        </ul>
-      </div>
-      <spinner ng-show="loading"></spinner>
-      <div class="animation-fade" ng-show="error" class="text-center" >
-        <h4>Sorry something went wrong :(</h4>
-        <iframe src="http://giphy.com/embed/PSyqVLhwDvjXO?html5=true" width="480" height="266" frameBorder="0"
-                webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-      </div>
-
-      <div class="animation-fade" ng-if="analyzedText && (loading == false)" style="margin-left:5%">
+    <div class="row" style="margin-top:30px">
+      <div class="col-md-2">
         <div class="row">
-          <div class="col-md-12">
-            <h3>{{fileName}}</h3>
+          <div class="panel panel-default" ng-hide="loadedDoc">
+            <div class="panel-heading">
+              <h3 class="panel-title">Select the article</h3>
+            </div>
+            <div class="panel-body">
+
+              <input id="fileUpload" type="file" on-read-file="showContent($fileContent)" style="display: none"/>
+              <a ng-click="uploadClick()" class="btn btn-primary btn-block">Upload your article</a>
+
+              <div class="text-center" style="padding:1%"><span class="font-small-caps">or use</span></div>
+              <a ng-click="loadExample(1)" class="btn btn-default btn-block">Example article A</a>
+              <a ng-click="loadExample(2)" class="btn btn-default btn-block">Example article B</a>
+
+              <p></p>
+            </div>
           </div>
+
         </div>
-        <div class="row" ng-show="topicCoverages">
-          <div class="col-md-8">
-            <div class="progress">
-              <div class="progress-bar" ng-class="topicProgressClass(topic.name)" ng-if="topic.coverage > 0"
-                   ng-style="topicCoverageStyle(topic)" ng-repeat="topic in topicCoverages">
-                <!--<span class="text-capitalize">{{topic.name}}</span>-->
+        <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Select the classification model</h3>
+            </div>
+            <div class="panel-body">
+              <spinner ng-hide="models.length"></spinner>
+              <select ng-show="models.length" style="max-width: 100%;" ng-model="selectedModel"
+                      ng-change="startClassifyTexts()"
+                      ng-options="model.id as model.desc for model in models"></select><br>
+
+              <a ng-show="models.length && selectedModel" class="btn btn-default btn-block"
+                 ng-href="/#/models/{{selectedModel}}/" style="margin-top:10px;">
+                Show model
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <div class="lead" style="padding-left:5%;" ng-hide="error || loading || analyzedText || loadedDoc">
+          In order to classify a text:
+          <ul style="padding-top:0.8%">
+            <li>upload your article or use an example</li>
+            <li>select the classification model</li>
+            <li>enjoy</li>
+          </ul>
+        </div>
+        <!--<div style="padding-left:5%;" ng-show="loadedDoc" ng-hide="error || loading || analyzedText">-->
+        <!--<div class="col-md-8 topic-text" ng-bind-html="fileContent">-->
+        <!--<div class="col-md-8 topic-text" >-->
+        <!--{{fileContent}}-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <div class="animation-fade" ng-show="error" class="text-center">
+          <h4>Sorry something went wrong :(</h4>
+          <iframe src="http://giphy.com/embed/PSyqVLhwDvjXO?html5=true" width="480" height="266" frameBorder="0"
+                  webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+        </div>
+
+        <div class="animation-fade" ng-if="(analyzedText && (loading == false)) || loadedDoc" style="margin-left:5%">
+          <div class="row" ng-hide="loadedDoc">
+            <div class="col-md-12">
+              <h3>{{fileName}}</h3>
+            </div>
+          </div>
+          <div class="row" ng-hide="topicCoverages">
+            <div class="col-md-8 topic-text" ng-bind-html="tmpFileContent">
+              <!--ng-class="topicBorderClass(p.category)"-->
+              <!--ng-bind-html="p.text">-->
+              <!--{{fileContent}}-->
+            </div>
+          </div>
+
+          <div class="row" ng-show="topicCoverages">
+            <div class="col-md-8">
+              <div class="progress">
+                <div class="progress-bar" ng-class="topicProgressClass(topic.name)" ng-if="topic.coverage > 0"
+                     ng-style="topicCoverageStyle(topic)" ng-repeat="topic in topicCoverages">
+                  <!--<span class="text-capitalize">{{topic.name}}</span>-->
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div>
+                <ul class="list-inline">
+                  <li class="topic-name" ng-class="topicColorClass(topic)" ng-if="topic.coverage > 0"
+                      ng-repeat="topic in topicCoverages">
+                    {{topic.name}} {{topic.coverage|number:0}}%
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
-          <div class="col-md-12">
-            <div>
-              <ul class="list-inline">
-                <li class="topic-name" ng-class="topicColorClass(topic)" ng-if="topic.coverage > 0" ng-repeat="topic in topicCoverages">
-                  {{topic.name}} {{topic.coverage|number:0}}%
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
 
-        <div class="row" ng-repeat="p in analyzedText">
-          <div class="col-md-8 topic-text" ng-class="topicBorderClass(p.category)"
-            ng-bind-html="p.text">
-          </div>
-          <div class="col-md-2">
-            <div ng-show="p.category.name">
-              <span  class="topic-name vertical-middle" ng-class="topicColorClass(p.category)"> {{p.category.name}}
-              <a style="cursor: pointer;" ng-class="topicColorClass(p.category)" ng-click="showScoreDetails(p.category.name, p.category.scoreDetails)">
+          <div class="row" ng-repeat="p in analyzedText">
+            <div class="col-md-8 topic-text" ng-class="topicBorderClass(p.category)"
+                 ng-bind-html="p.text">
+            </div>
+            <div class="col-md-2">
+              <div ng-show="p.category.name">
+              <span class="topic-name vertical-middle" ng-class="topicColorClass(p.category)"> {{p.category.name}}
+              <a style="cursor: pointer;" ng-class="topicColorClass(p.category)"
+                 ng-click="showScoreDetails(p.category.name, p.category.scoreDetails)">
                 <span class="glyphicon glyphicon-eye-open"></span>
               </a>
               </span>
+              </div>
             </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </div>
+
   </div>
-
-
 </div>
