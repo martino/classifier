@@ -19,7 +19,7 @@
             <li><a>Aggiungi documenti</a></li>
             <li><a ng-hide="documentGroup.testing_task_id" ng-click="launchTest()"  >Launch test</a></li>
             <li><a ng-show="documentGroup.testing_task_id !== null" >Classifing documents ...</a></li>
-            <li ng-hide="documentGroup.testing_task_id" ng-if="documentGroup.last_test"><a ng-href="/#/documents/{{documentGroup.id}}/test/{{documentGroup.last_test}}/">Visualizza l'ultimo test</a></li>
+            <li ng-hide="documentGroup.testing_task_id" ng-if="documentGroup.last_test"><a ng-href="/#/documents/{{documentGroup.id}}/evaluation/{{documentGroup.last_test}}/">Visualizza l'ultimo test</a></li>
           </ul>
         </div>
       </div>
