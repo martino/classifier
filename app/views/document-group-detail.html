@@ -10,7 +10,7 @@
 
       <div class="col-md-9">
         <ul class="col-3 list-unstyled">
-          <li ng-repeat="doc in documentGroup.document_list"><a>{{doc.file_name}}</a></li>
+          <li ng-repeat="doc in documentGroup.document_list"><a class="cursor-pointer" ng-href="/#/document/{{doc.id}}/">{{doc.file_name}}</a></li>
         </ul>
       </div>
       <div class="col-md-3">

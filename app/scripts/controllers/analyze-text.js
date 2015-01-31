@@ -8,15 +8,32 @@
  * Controller of the classifierApp
  */
 angular.module('classifierApp')
-  .controller('AnalyzeText', ['$rootScope', '$scope', '$http', '$q', 'datatxt', 'lodash', '$modal', function ($rootScope, $scope, $http, $q, datatxt, _, $modal) {
+  .controller('AnalyzeText', ['$rootScope', '$scope', '$http', '$q', 'datatxt', 'lodash', '$modal', '$routeParams', function ($rootScope, $scope, $http, $q, datatxt, _, $modal, $routeParams) {
     $scope.models = [];
     $scope.selectedModel = 'f83cc491-38e1-4203-bc18-25b076eeeeb4';
     $scope.selectedModel = '7b435adc-a363-4dda-aa90-677b921cb165';
     $scope.selectedModel = '23ff3152-7e95-4381-b7d2-ab077981e62a';
 
-    $rootScope.page = 'article';
-    $scope.loading = false;
+    $scope.loading = true;
     $scope.error = false;
+    $scope.loadedDoc = false;
+
+    if ($routeParams.docId) {
+      $rootScope.page = 'documents';
+      datatxt.getDocument($routeParams.docId).then(function (data) {
+        $scope.fileContent = data.text;
+        $scope.tmpFileContent = $scope.cleanRawText(data.text);
+        $scope.fileName = data.name;
+        $scope.loadedDoc = true;
+        $scope.documentGroup = data.group;
+        $scope.loading = false;
+
+      })
+    } else {
+      $rootScope.page = 'article';
+      $scope.loading = false;
+    }
+
 
 
     $scope.getCurrentModel = function () {
@@ -80,6 +97,10 @@ angular.module('classifierApp')
       return deferred.promise;
     };
 
+    $scope.cleanRawText = function (text) {
+      return text.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/[\n]+/g, '<br>');
+    };
+
     $scope.classifyTexts = function (texts) {
       var totalLen = 0;
       $scope.analyzedText = null;
@@ -104,7 +125,7 @@ angular.module('classifierApp')
         $scope.analyzedText = _.map(responses, function (data) {
           var threshold = 0.3
             , category = _.sortBy(data.response.categories, 'score').reverse()[0] || {}
-            , cleanedText = data.text.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/[\n]+/g, '<br>');
+            , cleanedText = $scope.cleanRawText(data.text);
 
           if ('score' in category){
             category = (category.score > threshold) ? category : {};
