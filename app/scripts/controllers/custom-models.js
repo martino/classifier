@@ -53,7 +53,7 @@ angular.module('classifierApp')
         };
         newCategory.topics = _.map(category.topics, function(el, key){return {
           'wikipage': key,
-          'weight': Number((el).toFixed(1)),
+          'weight': Number((parseFloat(el)).toFixed(1)),
           'name': $scope.formatWikipage(key)
         }});
         model.categories.push(newCategory)
