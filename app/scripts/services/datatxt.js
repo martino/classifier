@@ -236,6 +236,14 @@ angular.module('classifierApp')
       return httpRequest(request);
     };
 
+    var getDocumentGroupsEvaluation = function (dgID, testID) {
+      var request = {
+        method: 'GET',
+        url: gerente.urls.documentGroupTest(dgID, testID)
+      };
+      return httpRequest(request);
+    };
+
     return {
       'classifier': classifier,
       'getAllModels': getAllModels,
@@ -250,6 +258,8 @@ angular.module('classifierApp')
       'getRel': getRel,
       'testDocumentGroup': testDocumentGroup,
       'getDocumentGroups': getDocumentGroups,
-      'getDocumentDetails': getDocumentDetails
+      'getDocumentDetails': getDocumentDetails,
+      'getDocumentGroupsEvaluation': getDocumentGroupsEvaluation
+
     }
   }]);
