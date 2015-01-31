@@ -11,7 +11,7 @@ angular.module('classifierApp')
   .controller('DocumentGroupEvaluationDetailsCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'datatxt', 'lodash', function ($rootScope, $scope, $location, $routeParams, datatxt, _) {
     $rootScope.page = 'documents';
     $scope.results = [];
-    $scope.classes = [];
+    $scope.classes = {};
     $scope.selectedClass = '!null';
 
     $scope.selectClass = function (cls) {
@@ -23,13 +23,16 @@ angular.module('classifierApp')
       $scope.documentGroupResults = data;
 
       _.each(data.scoring_result, function (value, key) {
-          $scope.classes.push(key);
+          if (!(key in $scope.classes))
+            $scope.classes[key] = 0;
+
           _.each(value, function(doc) {
             if (!(doc.id in tmp_results))
               tmp_results[doc.id] = {
                 'fileName': doc.file_name,
                 'classes': []
               };
+            $scope.classes[key] += 1;
             tmp_results[doc.id].classes.push(key);
           })
         });

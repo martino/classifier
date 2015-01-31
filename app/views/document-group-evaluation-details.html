@@ -4,7 +4,7 @@
   <div ng-if="documentGroupResults">
     <div class="row">
       <h1><a ng-href="/#/documents/{{documentGroupResults.document_group.id}}/">{{documentGroupResults.document_group.name}}</a> <small>{{documentGroupResults.document_group.document_count}}</small></h1>
-      <h3>Classification <small>{{documentGroupResults.running_date|date:"yy-MM-dd HH:mm"}}</small> results</h3>
+      <h3>Documents classified with <a target="_blank" ng-href="/#/models/{{documentGroupResults.classifier_model.id}}/">{{documentGroupResults.classifier_model.name}}</a> on {{documentGroupResults.running_date|date:"yy-MM-dd HH:mm"}}</h3>
     </div>
 
 
@@ -12,10 +12,10 @@
       <div class="col-md-3">
         <div class="well">
           <ul class="list-unstyled">
-            <li class="font-small-caps"><a ng-click="selectClass('!null')">All classes</a></li>
+            <li class="font-small-caps"><a class="cursor-pointer" ng-click="selectClass('!null')" ng-class="{'font-bold': '!null'===selectedClass}">All classes</a></li>
             <li>
               <ul class="list-unstyled sub-list">
-                <li ng-repeat="cls in classes"><a ng-click="selectClass(cls)">{{cls}}</a></li>
+                <li ng-repeat="(cls, value) in classes"><a class="cursor-pointer" ng-click="selectClass(cls)" ng-class="{'font-bold': cls===selectedClass}">{{cls}} ({{value}})</a></li>
               </ul>
             </li>
           </ul>
@@ -25,7 +25,7 @@
       <div class="col-md-9">
         <ul class="col-3 list-unstyled">
           <li ng-repeat="doc in results | filter: {classes:selectedClass}">
-            <a>{{doc.fileName}}</a>
+            <a class="cursor-pointer" ng-href="">{{doc.fileName}}</a>
           </li>
         </ul>
       </div>
