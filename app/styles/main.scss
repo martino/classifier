@@ -39,6 +39,13 @@
   color: darkred;
 }
 
+.panel-title > a {
+  color: #428bca;
+  &:hover {
+    color: darken(#428bca, 15%);
+  }
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
