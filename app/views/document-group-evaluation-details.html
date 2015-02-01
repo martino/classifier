@@ -25,7 +25,7 @@
       <div class="col-md-9">
         <ul class="col-3 list-unstyled">
           <li ng-repeat="doc in results | filter: {classes:selectedClass}">
-            <a class="cursor-pointer" ng-href="">{{doc.fileName}}</a>
+            <a class="cursor-pointer" ng-href="/#/document/{{doc.id}}/test/{{documentGroupResults.id}}/">{{doc.fileName}}</a>
           </li>
         </ul>
       </div>
