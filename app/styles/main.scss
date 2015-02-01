@@ -135,6 +135,11 @@ $colors : #c1ddc7, #d7db7d, #bbcd77, #dfc590, #e4cdbf, #F08278, #CAE8D1, #819D97
   @include vertical-align;
 }
 
+.vertical-middle-absolute {
+  @include vertical-align;
+  position: absolute;
+}
+
 .topic-name {
   font-family: 'Ubuntu', sans-serif;
   font-variant: small-caps;
