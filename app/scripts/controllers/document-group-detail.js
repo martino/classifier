@@ -59,11 +59,14 @@ angular.module('classifierApp')
 
     datatxt.getDocumentDetails($routeParams.docId).then(function (data) {
       $scope.documentGroup = data;
+      if ($scope.documentGroup.testing_task_id === '')
+        $scope.documentGroup.testing_task_id = null;
       $scope.runningTest = null;
     });
 
     datatxt.getDocumentGroupsEvaluations($routeParams.docId).then(function (data) {
       $scope.documentGroupEvaluations = data;
+      console.log($scope.documentGroupEvaluations)
     })
   }]
 );

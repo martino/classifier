@@ -277,6 +277,20 @@ angular.module('classifierApp')
       return httpRequest(request);
     };
 
+
+    var createNewDocumentGroup = function (newName) {
+      var postData = {
+        'name': newName
+      };
+      var request = {
+        method: 'POST',
+        url: gerente.urls.documentGroups,
+        data: $.param(postData),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      };
+      return httpRequest(request);
+    };
+
     return {
       'classifier': classifier,
       'getAllModels': getAllModels,
@@ -295,6 +309,7 @@ angular.module('classifierApp')
       'getDocumentGroupsEvaluation': getDocumentGroupsEvaluation,
       'getDocumentGroupsEvaluations': getDocumentGroupsEvaluations,
       'getDocument': getDocument,
-      'getDocumentTestResult': getDocumentTestResult
+      'getDocumentTestResult': getDocumentTestResult,
+      'createNewDocumentGroup': createNewDocumentGroup
     }
   }]);

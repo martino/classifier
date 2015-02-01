@@ -6,10 +6,7 @@
   <spinner ng-show="documentGroups == null"></spinner>
 
   <div class="row" ng-if="documentGroups" style="margin-top:2%;">
-
-    <div ng-repeat="dg in documentGroups">
-      <document-group-card document-group="dg"></document-group-card>
-    </div>
-
+    <document-group-card document-group="dg" ng-repeat="dg in documentGroups"></document-group-card>
+    <document-group-card document-group=""></document-group-card>
   </div>
 </div>

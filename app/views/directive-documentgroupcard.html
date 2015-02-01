@@ -1,5 +1,5 @@
-<div class="col-md-4" >
-  <div class="panel panel-default" style="min-height: 200px;">
+<div class="col-md-4" ng-if="documentGroup" >
+  <div class="panel panel-default" style="min-height: 200px;" >
     <div class="panel-heading">
       <h3 class="panel-title"><a class="cursor-pointer" ng-href="/#/documents/{{documentGroup.id}}/">{{documentGroup.name}}</a></h3>
     </div>
@@ -11,5 +11,19 @@
       </ul>
     </div>
   </div>
+</div>
 
+<div class="col-md-4" ng-if="!documentGroup">
+  <div style="min-height: 200px;position:relative; border: 0;">
+    <div class="vertical-middle-absolute text-center" style="width: 100%;">
+      <a ng-hide="showNewDGForm" class="btn btn-default btn-lg" ng-click="toggleForm()"><i class="glyphicon glyphicon-plus" title="Create a new document group"></i></a>
+      <div ng-show="showNewDGForm" >
+        <input type="text" ng-model="newModel.name" placeholder="Document Group Name"/>
+        <div class="font-small-caps display-inline" style="margin-top: 10px;">
+          <a class="cursor-pointer color-cta" ng-click="createDocumentGroup()">create</a>
+          <a class="cursor-pointer" ng-click="toggleForm()">cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
