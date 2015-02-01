@@ -17,24 +17,57 @@ angular.module('classifierApp')
     $scope.loading = true;
     $scope.error = false;
     $scope.loadedDoc = false;
+    $scope.loadedDocTest = false;
+    $scope.threshold = 0.3;
 
-    if ($routeParams.docId) {
-      $rootScope.page = 'documents';
-      datatxt.getDocument($routeParams.docId).then(function (data) {
-        $scope.fileContent = data.text;
-        $scope.tmpFileContent = $scope.cleanRawText(data.text);
-        $scope.fileName = data.name;
-        $scope.loadedDoc = true;
-        $scope.documentGroup = data.group;
+    datatxt.getAllModels().then(function (data) {
+      var items = data, models = [];
+      for(var i=items.length-1; i>=0; i--) {
+        models.push(
+          {
+            'id': items[i].id,
+            'desc': items[i].data.description,
+            'name': items[i].name,
+            'data': items[i].data,
+            'labels': items[i].data.categories.map(function (el) {return el.name})
+          });
+      }
+      $scope.models = models;
+      $scope.init();
+    });
+
+    $scope.init = function () {
+      if ($routeParams.docId) {
+        $rootScope.page = 'documents';
+
+        if ($routeParams.testId) {
+          datatxt.getDocumentTestResult($routeParams.docId, $routeParams.testId).then(function (data) {
+            $scope.documentGroup = data.document.group;
+            $scope.testRan = data.test;
+            $scope.selectedModel = data.test.model_id;
+            $scope.fileName = data.document.name;
+            $scope.loadedDocTest = true;
+            $scope.threshold = data.threshold;
+            $scope.classifyTexts(null, data.raw_results);
+            $scope.loading = false;
+
+          })
+        } else {
+          datatxt.getDocument($routeParams.docId).then(function (data) {
+            $scope.fileContent = data.text;
+            $scope.tmpFileContent = $scope.cleanRawText(data.text);
+            $scope.fileName = data.name;
+            $scope.loadedDoc = true;
+            $scope.documentGroup = data.group;
+            $scope.loading = false;
+          })
+        }
+      } else {
+        $rootScope.page = 'article';
         $scope.loading = false;
+      }
 
-      })
-    } else {
-      $rootScope.page = 'article';
-      $scope.loading = false;
-    }
-
-
+    };
 
     $scope.getCurrentModel = function () {
       if ($scope.selectedModel === undefined) return {};
@@ -101,7 +134,37 @@ angular.module('classifierApp')
       return text.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/[\n]+/g, '<br>');
     };
 
-    $scope.classifyTexts = function (texts) {
+    var analyzeTexts = function (coverages, raw_results, totalLen) {
+      $scope.analyzedText = _.map(raw_results, function (data) {
+        var threshold = data.threshold
+          , category = _.sortBy(data.response, 'score').reverse()[0] || {}
+          , cleanedText = $scope.cleanRawText(data.text);
+
+        if ('score' in category){
+          category = (category.score > threshold) ? category : {};
+          var tmpTopic = _.where(coverages, {name: category.name})[0];
+          if (tmpTopic)
+            tmpTopic.len += data.text.length;
+        }
+
+        return {
+          text: cleanedText,
+          category: category
+        }
+      });
+      $scope.topicCoverages = _.map(coverages, function (topic) {
+        var normCoverage = topic.len;
+        if ((normCoverage > 0) && (totalLen > 0)) {
+          normCoverage = (normCoverage * 100) / totalLen
+        }
+        return {
+          name: topic.name,
+          coverage: normCoverage
+        }
+      });
+      $scope.loading = false;
+    };
+    $scope.classifyTexts = function (texts, raw_results) {
       var totalLen = 0;
       $scope.analyzedText = null;
       $scope.topicCoverages = null;
@@ -115,50 +178,35 @@ angular.module('classifierApp')
           len: 0
         }
       });
-
-      var responses = _.map(texts, function (text) {
-        totalLen += text.length;
-        return classifyText(text, $scope.selectedModel)
-      });
-
-      $q.all(responses).then(function (responses) {
-        $scope.analyzedText = _.map(responses, function (data) {
-          var threshold = 0.3
-            , category = _.sortBy(data.response.categories, 'score').reverse()[0] || {}
-            , cleanedText = $scope.cleanRawText(data.text);
-
-          if ('score' in category){
-            category = (category.score > threshold) ? category : {};
-            var tmpTopic = _.where(coverages, {name: category.name})[0];
-            if (tmpTopic)
-              tmpTopic.len += data.text.length;
-          }
-
-          return {
-            text: cleanedText,
-            category: category
-          }
-        });
-        $scope.topicCoverages = _.map(coverages, function (topic) {
-          var normCoverage = topic.len;
-          if ((normCoverage > 0) && (totalLen > 0)) {
-            normCoverage = (normCoverage * 100) / totalLen
-          }
-          return {
-            name: topic.name,
-            coverage: normCoverage
-          }
+      var responses;
+      if (!raw_results) {
+        raw_results = [];
+        responses = _.map(texts, function (text) {
+          totalLen += text.length;
+          return classifyText(text, $scope.selectedModel)
         });
 
-        $scope.loading = false;
-
-      }, function (responses) {
+        $q.all(responses).then(function (responses) {
+          _.map(responses, function(data) {
+            raw_results.push({
+              threshold: $scope.threshold,
+              text: data.text,
+              response: data.response.categories
+            })
+          });
+          analyzeTexts(coverages, raw_results, totalLen);
+        }, function (responses) {
           $scope.error = true;
           $scope.loading = false;
-
-        }
-      );
+        })
+      } else {
+        _.each(raw_results, function (data) {
+          totalLen += data.text.length;
+        });
+        analyzeTexts(coverages, raw_results, totalLen);
+      }
     };
+
     $scope.showScoreDetails = function (topic, scoreDetails) {
       var modalInstance = $modal.open({
         templateUrl: 'views/modal-scoredetails.html',
@@ -204,19 +252,5 @@ angular.module('classifierApp')
       $scope.startClassifyTexts();
     };
 
-    datatxt.getAllModels().then(function (data) {
-      var items = data, models = [];
-      for(var i=items.length-1; i>=0; i--) {
-        models.push(
-          {
-            'id': items[i].id,
-            'desc': items[i].data.description,
-            'name': items[i].name,
-            'data': items[i].data,
-            'labels': items[i].data.categories.map(function (el) {return el.name})
-          });
-      }
-      $scope.models = models;
-    });
 
   }]);

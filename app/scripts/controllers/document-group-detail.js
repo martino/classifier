@@ -60,7 +60,10 @@ angular.module('classifierApp')
     datatxt.getDocumentDetails($routeParams.docId).then(function (data) {
       $scope.documentGroup = data;
       $scope.runningTest = null;
-
     });
+
+    datatxt.getDocumentGroupsEvaluations($routeParams.docId).then(function (data) {
+      $scope.documentGroupEvaluations = data;
+    })
   }]
 );

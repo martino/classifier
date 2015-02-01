@@ -43,6 +43,9 @@ angular.module('classifierApp')
         documentGroup: function (dgId) {
           return '/document-group/' + dgId + '/';
         },
+        documentGroupTests: function (dgId) {
+          return '/document-group/' + dgId + '/test/';
+        },
         documentGroupTest: function (dgId, testId) {
           return '/document-group/' + dgId + '/test/' + testId + '/';
         },
@@ -51,6 +54,9 @@ angular.module('classifierApp')
         },
         document: function (docId) {
           return '/document/' + docId + '/';
+        },
+        documentTestResult: function (docId, testId) {
+          return '/document/' + docId + '/test/' + testId + '/';
         }
       }
     };
@@ -239,10 +245,18 @@ angular.module('classifierApp')
       return httpRequest(request);
     };
 
-    var getDocumentGroupsEvaluation = function (dgID, testID) {
+    var getDocumentGroupsEvaluation = function (dgId, testId) {
       var request = {
         method: 'GET',
-        url: gerente.urls.documentGroupTest(dgID, testID)
+        url: gerente.urls.documentGroupTest(dgId, testId)
+      };
+      return httpRequest(request);
+    };
+
+    var getDocumentGroupsEvaluations = function (dgId) {
+      var request = {
+        method: 'GET',
+        url: gerente.urls.documentGroupTests(dgId)
       };
       return httpRequest(request);
     };
@@ -251,6 +265,14 @@ angular.module('classifierApp')
       var request = {
         method: 'GET',
         url: gerente.urls.document(docId)
+      };
+      return httpRequest(request);
+    };
+
+    var getDocumentTestResult = function (docId, testId) {
+      var request = {
+        method: 'GET',
+        url: gerente.urls.documentTestResult(docId, testId)
       };
       return httpRequest(request);
     };
@@ -271,6 +293,8 @@ angular.module('classifierApp')
       'getDocumentGroups': getDocumentGroups,
       'getDocumentDetails': getDocumentDetails,
       'getDocumentGroupsEvaluation': getDocumentGroupsEvaluation,
-      'getDocument': getDocument
+      'getDocumentGroupsEvaluations': getDocumentGroupsEvaluations,
+      'getDocument': getDocument,
+      'getDocumentTestResult': getDocumentTestResult
     }
   }]);

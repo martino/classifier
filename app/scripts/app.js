@@ -35,6 +35,10 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
+      .when('/document/:docId/test/:testId/', {
+        templateUrl: 'views/analyze-text.html',
+        controller: 'AnalyzeText'
+      })
       .when('/document/:docId/', {
         templateUrl: 'views/analyze-text.html',
         controller: 'AnalyzeText'

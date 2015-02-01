@@ -3,7 +3,7 @@
   <spinner ng-show="documentGroup == null"></spinner>
   <div ng-if="documentGroup">
     <div class="row">
-      <h1>{{documentGroup.name}} <small>{{documentGroup.documents_count}}</small></h1>
+      <h1>{{documentGroup.name}}</h1>
     </div>
 
     <div class="row" style="margin-top:2%;">
@@ -14,16 +14,28 @@
         </ul>
       </div>
       <div class="col-md-3">
-
         <div class="panel panel-default" >
           <div class="panel-heading">
             <h3 class="panel-title">{{documentGroup.documents_count}} documents</h3>
           </div>
           <div class="panel-body">
             <a class="btn btn-default btn-block">Add documents</a>
-            <a class="btn btn-primary btn-block" ng-hide="documentGroup.testing_task_id" ng-click="launchTest()"  >Launch test</a>
+            <a class="btn btn-primary btn-block" ng-hide="documentGroup.testing_task_id" ng-click="launchTest()"  >Classify documents</a>
             <a class="btn btn-default btn-block" ng-show="documentGroup.testing_task_id !== null" >Classifing documents ...</a>
-            <a class="btn btn-default btn-block" ng-hide="documentGroup.testing_task_id" ng-if="documentGroup.last_test" ng-href="/#/documents/{{documentGroup.id}}/evaluation/{{documentGroup.last_test}}/">Visualizza l'ultimo test</a>
+            <!--<a class="btn btn-default btn-block" ng-hide="documentGroup.testing_task_id" ng-if="documentGroup.last_test" ng-href="/#/documents/{{documentGroup.id}}/evaluation/{{documentGroup.last_test}}/">Visualizza l'ultimo test</a>-->
+          </div>
+        </div>
+
+        <div class="panel panel-default" ng-show="documentGroupEvaluations">
+          <div class="panel-heading">
+            <h3 class="panel-title">Classifications</h3>
+          </div>
+          <div class="panel-body">
+            <ul>
+              <li ng-repeat="classification in documentGroupEvaluations">
+                <a class="cursor-pointer" ng-href="/#/documents/{{documentGroup.id}}/evaluation/{{classification.id}}/">{{classification.running_date|date:"yy-MM-dd HH:mm"}}</a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
