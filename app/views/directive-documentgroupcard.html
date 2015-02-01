@@ -1,11 +1,15 @@
-<div class="col-md-4 well" style="min-height: 200px;">
-  <h3>
-  <a ng-href="/#/documents/{{documentGroup.id}}/">{{documentGroup.name}}</a>
-  </h3>
+<div class="col-md-4" >
+  <div class="panel panel-default" style="min-height: 200px;">
+    <div class="panel-heading">
+      <h3 class="panel-title"><a class="cursor-pointer" ng-href="/#/documents/{{documentGroup.id}}/">{{documentGroup.name}}</a></h3>
+    </div>
+    <div class="panel-body">
+      <ul class="list-unstyled">
+        <li><strong>Documents</strong> {{documentGroup.documents_count}}</li>
+        <li ng-show="documentGroup.testing_task_id"><strong>Testing</strong> in progress</li>
+        <li ng-show="!documentGroup.testing_task_id && documentGroup.last_test"><strong>Classified</strong> Yes</li>
+      </ul>
+    </div>
+  </div>
 
-  <ul class="list-inline">
-    <li><strong>Documents</strong> {{documentGroup.documents_count}}</li>
-    <li ng-show="documentGroup.testing_task_id"><strong>Testing</strong> in progress</li>
-    <li ng-show="!documentGroup.testing_task_id && documentGroup.last_test"><strong>Tested</strong> Yes</li>
-  </ul>
 </div>
