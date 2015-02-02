@@ -5,7 +5,7 @@
       <h1 ng-hide="loadedDoc || loadedDocTest">Classify an article</h1>
       <h1 ng-show="loadedDoc || loadedDocTest">
         <small><a class="cursor-pointer" ng-href="/#/documents/{{documentGroup.id}}/">{{documentGroup.name}}</a></small>
-        / <small ng-show="loadedDocTest"> <a class="cursor-pointer" ng-href="/#/documents/{{documentGroup.id}}/evaluation/{{testRan.id}}/">{{testRan.created|date:"yy/MM/dd HH:mm"}}</a></small>
+        <span ng-show="loadedDocTest">/</span> <small ng-show="loadedDocTest"> <a class="cursor-pointer" ng-href="/#/documents/{{documentGroup.id}}/evaluation/{{testRan.id}}/">{{testRan.created|date:"yy/MM/dd HH:mm"}}</a></small>
         / {{fileName}}
       </h1>
     </div>

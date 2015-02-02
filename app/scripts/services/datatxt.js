@@ -40,6 +40,9 @@ angular.module('classifierApp')
           return '/tasks/' + taskId + '/status';
         },
         documentGroups: '/document-group/',
+        importDocument: function (dgId) {
+          return '/document-group/' + dgId + '/import/';
+        },
         documentGroup: function (dgId) {
           return '/document-group/' + dgId + '/';
         },
@@ -291,6 +294,19 @@ angular.module('classifierApp')
       return httpRequest(request);
     };
 
+    var uploadDocuments = function (dg, urlPath) {
+      var postData = {
+        'url': urlPath
+      };
+      var request = {
+        method: 'POST',
+        url: gerente.urls.importDocument(dg),
+        data: $.param(postData),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      };
+      return httpRequest(request);
+    };
+
     return {
       'classifier': classifier,
       'getAllModels': getAllModels,
@@ -310,6 +326,7 @@ angular.module('classifierApp')
       'getDocumentGroupsEvaluations': getDocumentGroupsEvaluations,
       'getDocument': getDocument,
       'getDocumentTestResult': getDocumentTestResult,
-      'createNewDocumentGroup': createNewDocumentGroup
+      'createNewDocumentGroup': createNewDocumentGroup,
+      'uploadDocuments': uploadDocuments
     }
   }]);
