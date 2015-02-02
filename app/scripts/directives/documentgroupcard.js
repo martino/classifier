@@ -21,7 +21,6 @@ angular.module('classifierApp')
           name: ''
         };
         scope.createDocumentGroup = function () {
-          console.log('create', scope.newModel);
           if (scope.newModel.name !== '')
             datatxt.createNewDocumentGroup(scope.newModel.name);
         };
