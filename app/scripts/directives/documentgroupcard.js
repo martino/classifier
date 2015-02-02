@@ -21,8 +21,14 @@ angular.module('classifierApp')
           name: ''
         };
         scope.createDocumentGroup = function () {
-          if (scope.newModel.name !== '')
-            datatxt.createNewDocumentGroup(scope.newModel.name);
+          if (scope.newModel.name !== '') {
+            datatxt.createNewDocumentGroup(scope.newModel.name).then(function (data) {
+              // TODO send a signal up
+              scope.$emit('updateDocumentGroups', {});
+              scope.toggleForm();
+              scope.newModel.name = '';
+            });
+          }
         };
         scope.toggleForm = function () {
           scope.showNewDGForm = !scope.showNewDGForm;
