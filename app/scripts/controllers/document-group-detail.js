@@ -19,10 +19,36 @@ angular.module('classifierApp')
           $timeout($scope.checkStatus, 5000);
         } else {
           $scope.documentGroup.testing_task_id = null;
+          $scope.updateDocumentGroupEvaluations();
         }
       })
     };
 
+    $scope.checkImportStatus = function () {
+      datatxt.testingStatus($scope.documentGroup.importing_task_id).then(function (data) {
+        if (data.task.result == null) {
+          $timeout($scope.checkImportStatus, 5000);
+        } else {
+          $scope.documentGroup.importing_task_id = null;
+          $scope.updateDocumentGroupDetails();
+        }
+      })
+    };
+
+    $scope.uploadFile = function () {
+      var uploadModal = $modal.open({
+        templateUrl: 'views/modal-document-upload.html',
+        controller: 'ModalDocumentUploadCtrl',
+        resolve: {}
+      });
+
+      uploadModal.result.then(function (data) {
+        datatxt.uploadDocuments($routeParams.docId, data.url).then(function (data) {
+          $scope.documentGroup.importing_task_id = data.task;
+          $scope.checkImportStatus();
+        })
+      });
+    };
 
     $scope.launchTest = function () {
       datatxt.getAllModels().then(function (data) {
@@ -52,21 +78,28 @@ angular.module('classifierApp')
             $scope.documentGroup.testing_task_id = data.task;
             $scope.checkStatus();
           });
-
-        })
+        });
       })
     };
 
-    datatxt.getDocumentDetails($routeParams.docId).then(function (data) {
-      $scope.documentGroup = data;
-      if ($scope.documentGroup.testing_task_id === '')
-        $scope.documentGroup.testing_task_id = null;
-      $scope.runningTest = null;
-    });
+    $scope.updateDocumentGroupDetails = function () {
+      datatxt.getDocumentDetails($routeParams.docId).then(function (data) {
+        $scope.documentGroup = data;
+        if ($scope.documentGroup.importing_task_id === '')
+          $scope.documentGroup.importing_task_id = null;
+        if ($scope.documentGroup.testing_task_id === '')
+          $scope.documentGroup.testing_task_id = null;
+        $scope.runningTest = null;
+      });
+    };
 
-    datatxt.getDocumentGroupsEvaluations($routeParams.docId).then(function (data) {
-      $scope.documentGroupEvaluations = data;
-      console.log($scope.documentGroupEvaluations)
-    })
+    $scope.updateDocumentGroupEvaluations = function () {
+      datatxt.getDocumentGroupsEvaluations($routeParams.docId).then(function (data) {
+        $scope.documentGroupEvaluations = data;
+      });
+    };
+
+    $scope.updateDocumentGroupDetails();
+    $scope.updateDocumentGroupEvaluations();
   }]
 );

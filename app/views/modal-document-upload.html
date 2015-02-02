@@ -1,0 +1,34 @@
+<div class="modal-header clearfix">
+  <h3 style="display:inline-block" class="modal-title">Upload document</h3>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+
+      <div class="row">
+        <div class="col-md-11">
+          <label for="urlField">File URL</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-11">
+          <form name="uploadForm">
+          <input ng-model="fileUrl" id="urlField" name="urlFiled" placeholder="https://dl.dropboxusercontent.com/u/123141/documents.zip" type="url"  style="width:100%;"/>
+          </form>
+        </div>
+      </div>
+
+      <div class="row" ng-show="urlError">
+        <div class="col-md-11">
+          <strong>This URL is {{urlErrorMessage}}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()">OK</button>
+  <button class="btn btn-default" ng-click="cancel()">Close</button>
+</div>
