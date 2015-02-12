@@ -1,0 +1,47 @@
+<div class="modal-header clearfix">
+  <h3 style="display:inline-block" class="modal-title">Launch test</h3>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="row">
+        <label for="modelNameInput">Model Name</label>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <input class="form-control" placeholder="Model name" required type="text" ng-model="model.name" id="modelNameInput">
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:2%;">
+        <label for="modelDescriptionInput">Model Description</label>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <input class="form-control" placeholder="Smart description" required type="text" ng-model="model.description" id="modelDescriptionInput">
+        </div>
+      </div>
+
+      <div class="row text-center">
+        <hr/>
+        <h5 class="font-small-caps">Advanced</h5>
+      </div>
+      <div class="row">
+        <div class="col-md-6 text-center">
+          <label for="modelTopicLimitInput">Topic Limit</label>
+          <input type="number" ng-model="model.topicLimit" id="modelTopicLimitInput">
+        </div>
+
+        <div class="col-md-6 text-center">
+          <label for="modelKeyentitiesInput">Use keyentities</label>
+          <input type="checkbox" ng-model="model.topicKeyentities" id="modelKeyentitiesInput">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()">OK</button>
+  <button class="btn btn-default" ng-click="cancel()">Close</button>
+</div>

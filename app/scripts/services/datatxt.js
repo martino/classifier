@@ -19,47 +19,46 @@ angular.module('classifierApp')
         wikisearch: '/datagraph/wikisearch/v1'
       },
       credentials: {
-        '$app_id': '***REMOVED***',
-        '$app_key': '163560ca***REMOVED***'
       }
     };
 
     var gerente = {
       urls: {
-        models: '/models/',
+        models: '/api/models/',
+        modelCreate: '/api/create-new-model/',
         model: function (modelId) {
-          return '/models/' + modelId + '/';
+          return '/api/models/' + modelId + '/';
         },
         modelTest: function (modelId) {
-          return '/models/' + modelId + '/test/';
+          return '/api/models/' + modelId + '/test/';
         },
         modelTestResults: function (modelId) {
-          return '/models/' + modelId + '/results/';
+          return '/api/models/' + modelId + '/results/';
         },
         modelTestStatus: function (taskId) {
-          return '/tasks/' + taskId + '/status';
+          return '/api/tasks/' + taskId + '/status';
         },
-        documentGroups: '/document-group/',
+        documentGroups: '/api/document-group/',
         importDocument: function (dgId) {
-          return '/document-group/' + dgId + '/import/';
+          return '/api/document-group/' + dgId + '/import/';
         },
         documentGroup: function (dgId) {
-          return '/document-group/' + dgId + '/';
+          return '/api/document-group/' + dgId + '/';
         },
         documentGroupTests: function (dgId) {
-          return '/document-group/' + dgId + '/test/';
+          return '/api/document-group/' + dgId + '/test/';
         },
         documentGroupTest: function (dgId, testId) {
-          return '/document-group/' + dgId + '/test/' + testId + '/';
+          return '/api/document-group/' + dgId + '/test/' + testId + '/';
         },
         documentGroupTesting: function (dgId, modelId, threshold) {
-          return '/document-group/' + dgId + '/run-test/' + modelId + '/?threshold=' + threshold;
+          return '/api/document-group/' + dgId + '/run-test/' + modelId + '/?threshold=' + threshold;
         },
         document: function (docId) {
-          return '/document/' + docId + '/';
+          return '/api/document/' + docId + '/';
         },
         documentTestResult: function (docId, testId) {
-          return '/document/' + docId + '/test/' + testId + '/';
+          return '/api/document/' + docId + '/test/' + testId + '/';
         }
       }
     };
@@ -307,6 +306,23 @@ angular.module('classifierApp')
       return httpRequest(request);
     };
 
+    var modelsCreate = function (newModel) {
+      var postData = {
+        'name': newModel.name,
+        'description': newModel.description,
+        'topic_limit': newModel.topicLimit,
+        'use_keyentities': newModel.topicKeyentities
+      };
+      console.log(postData)
+      var request = {
+        method: 'POST',
+        url: gerente.urls.modelCreate,
+        data: $.param(postData),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      };
+      return httpRequest(request);
+    };
+
     return {
       'classifier': classifier,
       'getAllModels': getAllModels,
@@ -327,6 +343,7 @@ angular.module('classifierApp')
       'getDocument': getDocument,
       'getDocumentTestResult': getDocumentTestResult,
       'createNewDocumentGroup': createNewDocumentGroup,
-      'uploadDocuments': uploadDocuments
+      'uploadDocuments': uploadDocuments,
+      'modelsCreate': modelsCreate
     }
   }]);
