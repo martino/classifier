@@ -313,7 +313,7 @@ angular.module('classifierApp')
         'topic_limit': newModel.topicLimit,
         'use_keyentities': newModel.topicKeyentities
       };
-      console.log(postData)
+
       var request = {
         method: 'POST',
         url: gerente.urls.modelCreate,
