@@ -78,7 +78,7 @@ module.exports = function (grunt) {
         https: true
       }, {
         context: '/_topic',
-        host: 'datatxt-dev.netseven.it',
+        host: '',
         port: 9999
       }, {
         context: '/datagraph', // the context of the data service
